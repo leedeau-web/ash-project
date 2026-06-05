@@ -1,0 +1,91 @@
+================================================================
+ASH PROJECT — Claude Code 작업 지시문 v2
+================================================================
+
+## 프로젝트 개요
+ASH Project는 사무실 업무 통합 플랫폼입니다.
+현재 기능: 뉴스 댓글 여론 분석 (11개 언론사)
+향후 기능: 탭 구조로 계속 추가 예정
+
+단일 Next.js 14 프로젝트 — Vercel 배포, 별도 백엔드 없음
+
+---
+
+## 로컬 실행
+```bash
+cd ash-project
+npm install
+# .env.local 파일에 ANTHROPIC_API_KEY=sk-ant-... 입력
+npm run dev   # http://localhost:3000  (프론트+백엔드 통합, 하나만 실행)
+```
+
+---
+
+## 프로젝트 구조
+```
+ash-project/
+├── src/app/
+│   ├── page.tsx                  ← 사이드바 + 탭 라우터 (메인 레이아웃)
+│   ├── layout.tsx
+│   ├── globals.css               ← 라이트 테마, CSS 변수
+│   ├── tabs/
+│   │   └── NewsCommentTab.tsx    ← 뉴스 댓글 분석 탭
+│   └── api/
+│       ├── scrape/route.ts       ← 11개 언론사 크롤링
+│       └── analyze/route.ts      ← Claude AI 분석
+```
+
+---
+
+## ★ 새 탭 추가 방법 (3단계)
+
+1. `src/app/tabs/MyNewTab.tsx` 파일 생성
+2. `src/app/page.tsx` 상단 TABS 배열에 추가:
+```typescript
+const TABS = [
+  { id: 'news-comment', icon: '📰', label: '뉴스 댓글 분석', component: NewsCommentTab, badge: null },
+  { id: 'my-feature',  icon: '📊', label: '새 기능 이름',   component: MyNewTab,       badge: 'NEW' },
+];
+```
+3. dynamic import 추가:
+```typescript
+const MyNewTab = dynamic(() => import('./tabs/MyNewTab'), { ssr: false });
+```
+
+---
+
+## 지원 언론사 (11개)
+조선일보(chosun.com) · 중앙일보(joongang.co.kr) · 한겨레(hani.co.kr)
+경향신문(khan.co.kr) · 동아일보(donga.com) · 문화일보(munhwa.com)
+서울경제(sedaily.com) · 서울신문(seoul.co.kr) · 매일경제(mk.co.kr)
+한국경제(hankyung.com) · 오마이뉴스(ohmynews.com)
+
+---
+
+## 언론사 추가 방법 (scrape/route.ts)
+1. detectSite() 에 도메인 조건 추가
+2. scrapeXXX() 함수 작성 (API 우선 → HTML fallback)
+3. SCRAPERS 객체에 등록
+4. tabs/NewsCommentTab.tsx 의 SITES 객체에 UI 정보 추가
+
+---
+
+## 댓글 API가 막혔을 때 디버깅
+브라우저 DevTools → Network 탭 → 언론사 기사 열기
+→ XHR/Fetch 필터 → "comment" 키워드로 검색
+→ 실제 API URL 확인 후 scrape/route.ts 수정
+
+---
+
+## 환경변수
+ANTHROPIC_API_KEY=sk-ant-...  (.env.local 또는 Vercel 대시보드)
+
+---
+
+## Vercel 배포
+1. GitHub push
+2. vercel.com → New Project → 저장소 선택
+3. Environment Variables → ANTHROPIC_API_KEY 추가
+4. Deploy
+
+================================================================
