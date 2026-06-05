@@ -29,11 +29,38 @@ type TabId = typeof TABS[number]['id'];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabId>('news-comment');
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const ActiveComponent = TABS.find(t => t.id === activeTab)?.component ?? NewsCommentTab;
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+
+      {/* ── 사이드바 토글 버튼 ── */}
+      <button
+        onClick={() => setSidebarVisible(v => !v)}
+        style={{
+          position: 'fixed',
+          left: sidebarVisible ? 210 : 0,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 200,
+          width: 20,
+          height: 48,
+          background: '#4f63d2',
+          border: 'none',
+          borderRadius: '0 8px 8px 0',
+          cursor: 'pointer',
+          color: '#fff',
+          fontSize: 12,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'left 0.3s ease',
+        }}
+      >
+        {sidebarVisible ? '◀' : '▶'}
+      </button>
 
       {/* ── 사이드바 ── */}
       <div style={{
@@ -43,6 +70,8 @@ export default function Home() {
         display: 'flex', flexDirection: 'column',
         zIndex: 100,
         boxShadow: '2px 0 16px rgba(79,99,210,0.06)',
+        transform: sidebarVisible ? 'translateX(0)' : 'translateX(-220px)',
+        transition: 'transform 0.3s ease',
       }}>
         {/* 로고 */}
         <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--border)' }}>
@@ -107,7 +136,7 @@ export default function Home() {
       </div>
 
       {/* ── 메인 콘텐츠 ── */}
-      <div style={{ marginLeft: 220, minHeight: '100vh' }}>
+      <div style={{ marginLeft: sidebarVisible ? 220 : 0, minHeight: '100vh', transition: 'margin-left 0.3s ease' }}>
         {/* 상단 헤더 */}
         <header style={{
           position: 'sticky', top: 0, zIndex: 50,

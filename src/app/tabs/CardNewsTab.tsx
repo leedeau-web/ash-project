@@ -120,6 +120,7 @@ async function renderSlide(
   slideIndex: number,
   date: string,
   scale = 1,
+  bgImage?: HTMLImageElement,
 ): Promise<boolean> {
   await loadFonts();
 
@@ -129,9 +130,9 @@ async function renderSlide(
   const ctx = canvas.getContext('2d')!;
   ctx.scale(scale, scale);
 
-  // 배경
+  // 배경 (캐시된 이미지 우선 사용)
   try {
-    const bg = await loadImg('/card-bg.png');
+    const bg = bgImage ?? await loadImg('/card-bg.png');
     ctx.drawImage(bg, 0, 0, W, H);
   } catch {
     ctx.fillStyle = '#e8e8e8';
@@ -203,16 +204,40 @@ export default function CardNewsTab() {
   const [downloading, setDownloading] = useState(false);
 
   const canvasRef   = useRef<HTMLCanvasElement>(null);
+  const renderRef   = useRef<number | null>(null);
+  const bgImageRef  = useRef<HTMLImageElement | null>(null);
   const activeSlide = slides[activeIdx] ?? { title: '', body: '', ...DEFAULT_SLIDE };
+
+  // ── 마운트 시 폰트 + 배경 이미지 프리로드 ────────────────────────────────
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = '/card-bg.png';
+    img.onload = () => { bgImageRef.current = img; imgCache['/card-bg.png'] = img; };
+
+    Promise.all([
+      new FontFace('Paperlogy-4Regular', 'url(/fonts/Paperlogy-4Regular.ttf)').load(),
+      new FontFace('Paperlogy-7Bold',    'url(/fonts/Paperlogy-7Bold.ttf)').load(),
+      new FontFace('Paperlogy-5Medium',  'url(/fonts/Paperlogy-5Medium.ttf)').load(),
+    ]).then(fonts => {
+      fonts.forEach(f => document.fonts.add(f));
+      fontsLoaded = true;
+    });
+  }, []);
 
   // ── 미리보기 렌더 ─────────────────────────────────────────────────────────
   const renderPreview = useCallback(async () => {
     if (!canvasRef.current) return;
-    const ov = await renderSlide(canvasRef.current, activeSlide, activeIdx, date, 0.4);
+    const ov = await renderSlide(canvasRef.current, activeSlide, activeIdx, date, 0.4, bgImageRef.current ?? undefined);
     setOverflow(ov);
   }, [activeSlide, activeIdx, date]);
 
-  useEffect(() => { renderPreview(); }, [renderPreview]);
+  const scheduleRender = useCallback(() => {
+    if (renderRef.current) cancelAnimationFrame(renderRef.current);
+    renderRef.current = requestAnimationFrame(() => { renderPreview(); });
+  }, [renderPreview]);
+
+  useEffect(() => { scheduleRender(); }, [scheduleRender]);
 
   // ── 슬라이드 관리 ─────────────────────────────────────────────────────────
   const addSlide = () => {
@@ -289,7 +314,18 @@ export default function CardNewsTab() {
             min={min} max={max} step={step}
             value={val}
             onChange={e => set(Number(e.target.value))}
-            style={{ flex: 1, cursor: 'pointer', accentColor: '#4f63d2', height: 4 }}
+            onInput={e => set(Number((e.target as HTMLInputElement).value))}
+            style={{
+              flex: 1,
+              cursor: 'pointer',
+              accentColor: '#4f63d2',
+              WebkitAppearance: 'none',
+              appearance: 'none',
+              height: '4px',
+              borderRadius: '2px',
+              outline: 'none',
+              touchAction: 'none',
+            }}
           />
           <input
             type="number"
