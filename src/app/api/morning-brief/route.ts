@@ -2,8 +2,11 @@
 // ASH Project — Morning Brief PDF Analyzer (document type)
 
 import { NextRequest, NextResponse } from 'next/server';
+import { PDFDocument } from 'pdf-lib';
 
 export const maxDuration = 120;
+
+const MAX_PAGES = 6;
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,9 +17,19 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) throw new Error('ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.');
 
-    // PDF → base64
+    // 원본 PDF 로드 후 앞 6페이지만 추출해 새 PDF 생성
     const arrayBuffer = await file.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString('base64');
+    const srcDoc = await PDFDocument.load(arrayBuffer);
+    const totalPages = srcDoc.getPageCount();
+    const pageCount = Math.min(totalPages, MAX_PAGES);
+
+    const trimDoc = await PDFDocument.create();
+    const copied = await trimDoc.copyPagesFrom(srcDoc, Array.from({ length: pageCount }, (_, i) => i));
+    copied.forEach(p => trimDoc.addPage(p));
+    const trimBytes = await trimDoc.save();
+
+    // 앞 6페이지 PDF → base64
+    const base64 = Buffer.from(trimBytes).toString('base64');
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -81,7 +94,7 @@ export async function POST(req: NextRequest) {
     const data = await res.json() as { content: Array<{ type: string; text: string }> };
     const summary = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
 
-    return NextResponse.json({ summary, pageCount: 0, fileName: file.name });
+    return NextResponse.json({ summary, pageCount, fileName: file.name });
   } catch (e) {
     console.error('상세 에러:', e);
     const msg = e instanceof Error ? e.message : '알 수 없는 오류';
