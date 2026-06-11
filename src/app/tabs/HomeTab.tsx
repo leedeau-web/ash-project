@@ -31,22 +31,31 @@ const FEATURES: { id: ToolTabId; icon: string; title: string; desc: string }[] =
 
 export default function HomeTab({ onNavigate }: HomeTabProps) {
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 40);
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   return (
     <div style={{
-      paddingTop: 52,
+      paddingTop: isMobile ? 28 : 52,
       paddingBottom: 80,
       opacity: visible ? 1 : 0,
       transition: 'opacity 0.5s ease',
     }}>
       <div style={{
         display: 'flex',
-        gap: 64,
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? 28 : 64,
         alignItems: 'flex-start',
       }}>
 
@@ -55,10 +64,10 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
 
           {/* 큰따옴표 슬로건 */}
           <div style={{
-            fontSize: 30,
+            fontSize: isMobile ? 22 : 30,
             fontWeight: 800,
             lineHeight: 1.45,
-            marginBottom: 30,
+            marginBottom: isMobile ? 18 : 30,
             background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -70,10 +79,10 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
 
           {/* 소개 텍스트 */}
           <p style={{
-            fontSize: 15,
+            fontSize: isMobile ? 13 : 15,
             color: 'rgba(255,255,255,0.75)',
-            lineHeight: 1.95,
-            marginBottom: 44,
+            lineHeight: 1.85,
+            marginBottom: isMobile ? 24 : 44,
             maxWidth: 560,
             wordBreak: 'keep-all',
           }}>
@@ -135,17 +144,18 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
           </div>
         </div>
 
-        {/* ── 우측 의원 사진 ── */}
+        {/* ── 의원 사진 (모바일: 상단 200px / 데스크탑: 우측 500px) ── */}
         <div style={{
           flexShrink: 0,
-          width: 320,
-          position: 'sticky',
-          top: 80,
+          width: isMobile ? '100%' : 320,
+          order: isMobile ? -1 : 0,
+          position: isMobile ? 'relative' : 'sticky',
+          top: isMobile ? undefined : 80,
         }}>
           <div style={{
             width: '100%',
-            height: 500,
-            borderRadius: 24,
+            height: isMobile ? 200 : 500,
+            borderRadius: isMobile ? 16 : 24,
             overflow: 'hidden',
             position: 'relative',
           }}>
