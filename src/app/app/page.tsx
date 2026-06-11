@@ -154,7 +154,9 @@ export default function AppPage() {
             src="/senator.jpg"
             alt="안상훈 의원"
             style={{
-              width: 152, height: 152,
+              display: 'block',
+              width: '160px', height: '160px',
+              minWidth: '160px', minHeight: '160px',
               borderRadius: '50%',
               objectFit: 'cover',
               objectPosition: 'center top',
