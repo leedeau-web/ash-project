@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASH LAB. — 안상훈 의원실 스마트워크 플랫폼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0e1a;
+      --surface: #13152a;
+      --accent1: #4f63d2;
+      --accent2: #7c4dff;
+      --text: #f0f1ff;
+      --muted: rgba(240,241,255,0.55);
+      --border: rgba(79,99,210,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── 네비게이션 ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 64px; height: 72px;
+      background: rgba(13,14,26,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 20px; font-weight: 800; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 11px 26px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: #fff; font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px; font-weight: 600;
+      border: none; border-radius: 10px;
+      cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ── 히어로 ── */
+    .hero-wrap { max-width: 1240px; margin: 0 auto; padding: 0 64px; }
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; gap: 80px;
+      padding: 112px 0 80px;
+    }
+    .hero-text { flex: 1; }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 3.5px;
+      color: var(--accent1); text-transform: uppercase; margin-bottom: 22px;
+    }
+    .hero-title {
+      font-size: 44px; font-weight: 800; line-height: 1.32; margin-bottom: 28px;
+      word-break: keep-all;
+    }
+    .grad-text {
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 17px; color: var(--muted); line-height: 1.85;
+      margin-bottom: 44px; max-width: 460px; word-break: keep-all;
+    }
+    .hero-photo { flex-shrink: 0; display: flex; justify-content: center; }
+    .photo-wrap { position: relative; width: 310px; height: 310px; }
+    .photo-wrap img {
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+      border: 3px solid rgba(79,99,210,0.4);
+      box-shadow: 0 0 64px rgba(79,99,210,0.22), 0 0 120px rgba(124,77,255,0.1);
+    }
+    .photo-badge {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      background: rgba(13,14,26,0.92); backdrop-filter: blur(10px);
+      border: 1px solid rgba(79,99,210,0.3); border-radius: 24px;
+      padding: 8px 22px; white-space: nowrap; text-align: center;
+    }
+    .badge-name { font-size: 14px; font-weight: 700; }
+    .badge-party { font-size: 11px; color: var(--accent1); font-weight: 600; margin-top: 2px; }
+
+    /* ── 기능 섹션 ── */
+    section { padding: 100px 64px; }
+    .section-inner { max-width: 1240px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3.5px;
+      color: var(--accent1); text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-title { font-size: 34px; font-weight: 800; line-height: 1.3; margin-bottom: 52px; }
+
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 36px 30px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79,99,210,0.5);
+      box-shadow: 0 20px 56px rgba(79,99,210,0.13);
+    }
+    .card-icon {
+      width: 54px; height: 54px; border-radius: 15px;
+      background: linear-gradient(135deg,rgba(79,99,210,0.18),rgba(124,77,255,0.18));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 22px;
+    }
+    .card-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .card-desc { font-size: 14px; color: var(--muted); line-height: 1.75; word-break: keep-all; }
+
+    /* ── CTA 배너 ── */
+    .cta {
+      background: linear-gradient(135deg,rgba(79,99,210,0.13),rgba(124,77,255,0.13));
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 72px 64px;
+    }
+    .cta-inner {
+      max-width: 1240px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    }
+    .cta-title { font-size: 32px; font-weight: 800; word-break: keep-all; }
+    .cta-sub { font-size: 16px; color: var(--muted); margin-top: 10px; }
+
+    /* ── 푸터 ── */
+    footer {
+      padding: 36px 64px; text-align: center;
+      font-size: 13px; color: rgba(240,241,255,0.22);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── 페이드인 애니메이션 ── */
+    .fade-in, .fi-left, .fi-right {
+      opacity: 0; transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-in  { transform: translateY(28px); }
+    .fi-left  { transform: translateX(-44px); }
+    .fi-right { transform: translateX(44px); }
+    .fade-in.on, .fi-left.on, .fi-right.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.22s; }
+    .d3 { transition-delay: 0.38s; }
+
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .hero-wrap { padding: 0 24px; }
+      .hero { flex-direction: column-reverse; gap: 48px; padding: 112px 0 60px; text-align: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-title { font-size: 30px; }
+      .cards { grid-template-columns: 1fr; }
+      section { padding: 64px 24px; }
+      .cta { padding: 56px 24px; }
+      .cta-inner { flex-direction: column; text-align: center; }
+      footer { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+  <nav>
+    <span class="nav-logo">ASH LAB.</span>
+    <a href="/app" class="btn-primary">플랫폼 시작하기</a>
+  </nav>
+
+  <!-- 히어로 -->
+  <div class="hero-wrap">
+    <div class="hero">
+      <div class="hero-text fi-left">
+        <p class="hero-eyebrow">ASH LAB. Smart Work Platform</p>
+        <h1 class="hero-title">
+          정책에 집중할 수 있도록,<br />
+          <span class="grad-text">반복 업무는 AI가 처리합니다.</span>
+        </h1>
+        <p class="hero-sub">
+          뉴스 댓글 여론 분석부터 카드뉴스 제작, 조간스크랩 요약까지.<br />
+          Claude AI 기반으로 의원실 업무를 자동화합니다.
+        </p>
+        <a href="/app" class="btn-primary">지금 시작하기 &nbsp;→</a>
+      </div>
+      <div class="hero-photo fi-right">
+        <div class="photo-wrap">
+          <img src="/senator.jpg" alt="안상훈 의원" />
+          <div class="photo-badge">
+            <div class="badge-name">안상훈 의원</div>
+            <div class="badge-party">국민의힘</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기능 카드 -->
+  <section>
+    <div class="section-inner">
+      <p class="section-label fade-in">기능 소개</p>
+      <h2 class="section-title fade-in d1">의원실 업무를 스마트하게</h2>
+      <div class="cards">
+        <div class="card fade-in d1">
+          <div class="card-icon">📰</div>
+          <div class="card-title">뉴스 댓글 분석</div>
+          <p class="card-desc">조선·중앙·한겨레 등 12개 언론사 기사 댓글을 자동 수집하고 Claude AI가 긍정·부정 여론을 분석합니다.</p>
+        </div>
+        <div class="card fade-in d2">
+          <div class="card-icon">🗞️</div>
+          <div class="card-title">카드뉴스 제작</div>
+          <p class="card-desc">텍스트 입력만으로 1080×1440 고해상도 카드뉴스를 즉시 생성합니다. 슬라이드별 PNG 다운로드 지원.</p>
+        </div>
+        <div class="card fade-in d3">
+          <div class="card-icon">📄</div>
+          <div class="card-title">조간스크랩 요약</div>
+          <p class="card-desc">복지부 조간 신문 스크랩 PDF를 업로드하면 보건의료·사회복지·사설 분야별로 핵심 기사를 자동 정리합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA 배너 -->
+  <div class="cta">
+    <div class="cta-inner fade-in">
+      <div>
+        <div class="cta-title">지금 바로 시작하세요</div>
+        <div class="cta-sub">의원실 업무 효율을 지금 바로 높여보세요.</div>
+      </div>
+      <a href="/app" class="btn-primary" style="font-size:15px;padding:14px 36px;white-space:nowrap;">플랫폼 시작하기 &nbsp;→</a>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer>© 2026 ASH LAB. &nbsp;·&nbsp; 안상훈 의원실 &nbsp;·&nbsp; Powered by Claude AI</footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in, .fi-left, .fi-right').forEach(el => obs.observe(el));
+    // 히어로는 즉시 표시
+    setTimeout(() => {
+      document.querySelectorAll('.hero .fi-left, .hero .fi-right').forEach(el => el.classList.add('on'));
+    }, 80);
+  </script>
+</body>
+</html>
