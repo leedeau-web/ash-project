@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 
+
 // ── 상수 ─────────────────────────────────────────────────────────────────────
 const W = 1080, H = 1440;
 const TEXT_X = 150;
@@ -272,11 +273,21 @@ export default function CardNewsTab() {
   const [overflow, setOverflow]   = useState(false);
   const [downloading, setDownloading] = useState(false);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   const canvasRef   = useRef<HTMLCanvasElement>(null);
   const renderRef   = useRef<number | null>(null);
   const bgImageRef  = useRef<HTMLImageElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const activeSlide = slides[activeIdx] ?? { title: '', body: '', ...DEFAULT_SLIDE };
+
+  // ── 모바일 감지 ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // ── 마운트 시 폰트 + 배경 이미지 프리로드 ────────────────────────────────
   useEffect(() => {
@@ -373,10 +384,16 @@ export default function CardNewsTab() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div style={{ padding: '28px 0', display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+    <div style={{
+      padding: '28px 0',
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      gap: 24,
+      alignItems: 'flex-start',
+    }}>
 
-      {/* ── 왼쪽: 입력 패널 ── */}
-      <div style={{ width: '40%', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {/* ── 설정 패널 (모바일: 위, 데스크탑: 왼쪽 40%) ── */}
+      <div style={{ width: isMobile ? '100%' : '40%', display: 'flex', flexDirection: 'column', gap: 14 }}>
 
         {/* 날짜 + 슬라이드별 설정 슬라이더 */}
         <div className="card" style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 12 }}>

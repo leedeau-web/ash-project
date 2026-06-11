@@ -21,6 +21,14 @@ export default function AppPage() {
   const [activeTab, setActiveTab]           = useState<TabId>('home');
   const [contentVisible, setContentVisible] = useState(true);
   const [scrollY, setScrollY]               = useState(0);
+  const [isMobile, setIsMobile]             = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -66,13 +74,15 @@ export default function AppPage() {
         backdropFilter: 'blur(14px)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
         display: 'flex', alignItems: 'center',
-        padding: '0 36px',
+        padding: isMobile ? '0 14px' : '0 36px',
       }}>
         {/* 로고 */}
         <span
           onClick={() => window.location.reload()}
           style={{
-            fontSize: 17, fontWeight: 800, letterSpacing: 3,
+            fontSize: isMobile ? 13 : 17,
+            fontWeight: 800,
+            letterSpacing: isMobile ? 2 : 3,
             background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             fontFamily: 'Space Grotesk, monospace',
@@ -89,8 +99,10 @@ export default function AppPage() {
                 key={tab.id}
                 onClick={() => switchTab(tab.id)}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: 7,
-                  height: 60, padding: '0 20px',
+                  display: 'flex', alignItems: 'center',
+                  gap: isMobile ? 0 : 7,
+                  height: 60,
+                  padding: isMobile ? '0 10px' : '0 20px',
                   background: 'none', border: 'none',
                   borderBottom: active ? '2px solid #7c4dff' : '2px solid transparent',
                   cursor: 'pointer', fontFamily: 'inherit',
@@ -98,28 +110,38 @@ export default function AppPage() {
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: 15 }}>{tab.icon}</span>
-                <span style={{
-                  fontSize: 14, fontWeight: active ? 600 : 400,
-                  ...(active
-                    ? { background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
-                        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }
-                    : { color: 'rgba(255,255,255,0.7)' }),
-                }}>
-                  {tab.label}
-                </span>
+                <span style={{ fontSize: isMobile ? 19 : 15 }}>{tab.icon}</span>
+                {/* 모바일에서 텍스트 숨김 */}
+                {!isMobile && (
+                  <span style={{
+                    fontSize: 14, fontWeight: active ? 600 : 400,
+                    ...(active
+                      ? { background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+                          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }
+                      : { color: 'rgba(255,255,255,0.7)' }),
+                  }}>
+                    {tab.label}
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
 
-        {/* 우측 홈 링크 */}
-        <a href="/" className="nav-link-home" style={{ flexShrink: 0 }}>ashlab.co.kr</a>
+        {/* 우측 홈 링크 — 모바일 숨김 */}
+        {!isMobile && (
+          <a href="/" className="nav-link-home" style={{ flexShrink: 0 }}>ashlab.co.kr</a>
+        )}
       </nav>
 
-      {/* ── 히어로 배너 (사진 없이 텍스트만) ── */}
-      <div style={{ position: 'relative', height: 160, marginTop: 60, overflow: 'hidden' }}>
-        {/* 배경 이미지 (어둡게 + parallax) */}
+      {/* ── 히어로 배너 ── */}
+      <div style={{
+        position: 'relative',
+        height: isMobile ? 100 : 160,
+        marginTop: 60,
+        overflow: 'hidden',
+      }}>
+        {/* 배경 이미지 */}
         <div style={{
           position: 'absolute', inset: '-40px 0',
           backgroundImage: 'url(/senator.jpg)',
@@ -128,7 +150,6 @@ export default function AppPage() {
           filter: 'brightness(0.12) blur(2px)',
           transform: 'scale(1.06)',
         }} />
-        {/* 오버레이 */}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(13,14,26,0.72)' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(13,14,26,0.85) 100%)' }} />
 
@@ -136,16 +157,23 @@ export default function AppPage() {
         <div style={{
           position: 'relative', zIndex: 1,
           height: '100%', maxWidth: 1200, margin: '0 auto',
-          padding: '0 44px',
+          padding: isMobile ? '0 20px' : '0 44px',
           display: 'flex', flexDirection: 'column', justifyContent: 'center',
         }}>
           <div style={{
-            fontSize: 34, fontWeight: 800, letterSpacing: 5,
+            fontSize: isMobile ? 22 : 34,
+            fontWeight: 800,
+            letterSpacing: isMobile ? 2 : 5,
             background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-            marginBottom: 8, fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
+            marginBottom: isMobile ? 4 : 8,
+            fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
           }}>ASH LAB</div>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: 0.8 }}>
+          <div style={{
+            fontSize: isMobile ? 11 : 13,
+            color: 'rgba(255,255,255,0.5)',
+            letterSpacing: 0.8,
+          }}>
             안상훈 의원실 스마트워크 플랫폼
           </div>
         </div>
@@ -154,7 +182,10 @@ export default function AppPage() {
       {/* ── 탭 콘텐츠 ── */}
       <div
         className={contentVisible ? 'tab-visible' : 'tab-hidden'}
-        style={{ maxWidth: 1200, margin: '0 auto', padding: '0 44px 80px' }}
+        style={{
+          maxWidth: 1200, margin: '0 auto',
+          padding: isMobile ? '0 16px 60px' : '0 44px 80px',
+        }}
       >
         {renderContent()}
       </div>
