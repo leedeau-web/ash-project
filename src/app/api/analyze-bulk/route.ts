@@ -31,8 +31,16 @@ interface ClaudeResult {
 
 export async function POST(req: NextRequest) {
   try {
-    const { articles } = await req.json() as { articles: ArticleInput[] };
-    if (!articles?.length) return NextResponse.json({ error: '기사가 없습니다.' }, { status: 400 });
+    const { articles: rawArticles } = await req.json() as { articles: ArticleInput[] };
+    if (!rawArticles?.length) return NextResponse.json({ error: '기사가 없습니다.' }, { status: 400 });
+
+    // 댓글 없는 기사 제외 (스킵 목록 따로 보관)
+    const skippedArticles = rawArticles.filter(a => !a.comments?.length);
+    const articles = rawArticles.filter(a => a.comments?.length > 0);
+
+    if (!articles.length) {
+      return NextResponse.json({ error: '분석 가능한 댓글이 없습니다. 모든 기사에 댓글이 없습니다.' }, { status: 400 });
+    }
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) throw new Error('ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.');
@@ -117,7 +125,11 @@ ${summaryTemplate}
       }),
     });
 
-    if (!res.ok) throw new Error(`Claude API ${res.status}`);
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error('Claude API 에러 응답:', errBody);
+      throw new Error(`Claude API ${res.status}`);
+    }
 
     const data = await res.json() as { content: Array<{ type: string; text: string }> };
     const raw = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
@@ -185,8 +197,16 @@ ${summaryTemplate}
       topPositiveComments: topPos,
       topNegativeComments: topNeg,
       articleSummaries,
+      skippedArticles: skippedArticles.map(a => ({
+        title: a.title,
+        site: a.site,
+        siteName: a.siteName,
+        url: a.url,
+        reason: '댓글 없음',
+      })),
     });
   } catch (e) {
+    console.error('상세 에러:', e);
     const msg = e instanceof Error ? e.message : '알 수 없는 오류';
     return NextResponse.json({ error: `분석 실패: ${msg}` }, { status: 500 });
   }

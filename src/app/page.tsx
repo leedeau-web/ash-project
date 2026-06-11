@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 
 const NewsCommentTab = dynamic(() => import('./tabs/NewsCommentTab'), { ssr: false });
 const CardNewsTab = dynamic(() => import('./tabs/CardNewsTab'), { ssr: false });
+const MorningBriefTab = dynamic(() => import('./tabs/MorningBriefTab'), { ssr: false });
 
 // ── 탭 정의 ──────────────────────────────────────────────────────────────
 // 새 탭 추가 시 여기에만 추가하면 됩니다
@@ -21,6 +22,13 @@ const TABS = [
     icon: '🗞️',
     label: '카드뉴스 제작',
     component: CardNewsTab,
+    badge: null,
+  },
+  {
+    id: 'morning-brief',
+    icon: '📰',
+    label: '조간스크랩 요약',
+    component: MorningBriefTab,
     badge: null,
   },
 ] as const;

@@ -99,6 +99,7 @@ function drawJustifiedText(
 }
 
 // ── 슬라이드 타입 ─────────────────────────────────────────────────────────────
+
 interface Slide {
   title: string;
   body: string;
@@ -112,6 +113,74 @@ const DEFAULT_SLIDE: Omit<Slide, 'title' | 'body'> = {
   letterSpacing: 0,
   bodyOffsetY: 0,
 };
+
+// ── StepperRow (슬라이더 + [-][숫자][+]) ─────────────────────────────────────
+const STEPPER_BTN: React.CSSProperties = {
+  width: 32, height: 32, borderRadius: 7, flexShrink: 0,
+  border: '1px solid #d0d5e8', background: 'var(--surface)',
+  color: 'var(--text)', fontSize: 16, lineHeight: 1,
+  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  userSelect: 'none',
+};
+
+function StepperRow({
+  label, min, max, step, decimals = 0, value, onUpdate, onStartPress, onStopPress,
+}: {
+  label: string;
+  min: number; max: number; step: number; decimals?: number;
+  value: number;
+  onUpdate: (v: number) => void;
+  onStartPress: (fn: () => void) => void;
+  onStopPress: () => void;
+}) {
+  const set = (v: number) =>
+    onUpdate(Math.min(max, Math.max(min, parseFloat(v.toFixed(decimals > 0 ? decimals : 0)))));
+  const dec = () => set(value - step);
+  const inc = () => set(value + step);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>{label}</span>
+      <input
+        type="range"
+        min={min} max={max} step={step}
+        value={value}
+        onChange={e => set(Number(e.target.value))}
+        onInput={e => set(Number((e.target as HTMLInputElement).value))}
+        style={{
+          width: '100%', cursor: 'pointer',
+          height: '4px', borderRadius: '2px', outline: 'none',
+        }}
+      />
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <button
+          style={STEPPER_BTN}
+          onMouseDown={() => onStartPress(dec)} onMouseUp={onStopPress} onMouseLeave={onStopPress}
+          onTouchStart={e => { e.preventDefault(); onStartPress(dec); }} onTouchEnd={onStopPress}
+        >−</button>
+        <input
+          type="number"
+          min={min} max={max} step={step}
+          value={decimals > 0 ? value.toFixed(decimals) : value}
+          onChange={e => set(Number(e.target.value))}
+          style={{
+            flex: 1, padding: '5px 4px', borderRadius: 6,
+            border: '1px solid #d0d5e8', background: '#fff',
+            color: 'var(--text)', fontSize: 13, textAlign: 'center',
+            outline: 'none', fontFamily: 'monospace',
+          }}
+          onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+          onBlur={e => e.target.style.borderColor = '#d0d5e8'}
+        />
+        <button
+          style={STEPPER_BTN}
+          onMouseDown={() => onStartPress(inc)} onMouseUp={onStopPress} onMouseLeave={onStopPress}
+          onTouchStart={e => { e.preventDefault(); onStartPress(inc); }} onTouchEnd={onStopPress}
+        >+</button>
+      </div>
+    </div>
+  );
+}
 
 // ── 렌더 함수 ─────────────────────────────────────────────────────────────────
 async function renderSlide(
@@ -302,74 +371,6 @@ export default function CardNewsTab() {
     if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
   };
 
-  // ── 설정 행 헬퍼 (라벨 + 슬라이더 + [-][숫자][+]) ────────────────────────
-  const StepperRow = ({
-    label, field, min, max, step, decimals = 0,
-  }: {
-    label: string;
-    field: keyof Pick<Slide, 'lineHeight' | 'letterSpacing' | 'bodyOffsetY'>;
-    min: number; max: number; step: number; decimals?: number;
-  }) => {
-    const val = activeSlide[field] as number;
-    const set = (v: number) => updateSlide({ [field]: Math.min(max, Math.max(min, parseFloat(v.toFixed(decimals > 0 ? decimals : 0)))) });
-    const dec = () => set(val - step);
-    const inc = () => set(val + step);
-
-    const btnStyle: React.CSSProperties = {
-      width: 32, height: 32, borderRadius: 7, flexShrink: 0,
-      border: '1px solid #d0d5e8', background: 'var(--surface)',
-      color: 'var(--text)', fontSize: 16, lineHeight: 1,
-      cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      userSelect: 'none',
-    };
-
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>{label}</span>
-        <input
-          type="range"
-          min={min} max={max} step={step}
-          value={val}
-          onChange={e => set(Number(e.target.value))}
-          onInput={e => set(Number((e.target as HTMLInputElement).value))}
-          style={{
-            width: '100%', cursor: 'pointer', accentColor: '#4f63d2',
-            WebkitAppearance: 'none', appearance: 'none',
-            height: '4px', borderRadius: '2px', outline: 'none', touchAction: 'none',
-          }}
-        />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <button
-            style={btnStyle}
-            onMouseDown={() => startPress(dec)} onMouseUp={stopPress} onMouseLeave={stopPress}
-            onTouchStart={e => { e.preventDefault(); startPress(dec); }} onTouchEnd={stopPress}
-          >−</button>
-          <input
-            type="number"
-            min={min} max={max} step={step}
-            value={decimals > 0 ? val.toFixed(decimals) : val}
-            onChange={e => set(Number(e.target.value))}
-            style={{
-              flex: 1, padding: '5px 4px', borderRadius: 6,
-              border: '1px solid #d0d5e8', background: '#fff',
-              color: 'var(--text)', fontSize: 13, textAlign: 'center',
-              outline: 'none', fontFamily: 'monospace',
-              MozAppearance: 'textfield' as const,
-              WebkitAppearance: 'none' as const,
-            }}
-            onFocus={e => e.target.style.borderColor = 'var(--accent)'}
-            onBlur={e => e.target.style.borderColor = '#d0d5e8'}
-          />
-          <button
-            style={btnStyle}
-            onMouseDown={() => startPress(inc)} onMouseUp={stopPress} onMouseLeave={stopPress}
-            onTouchStart={e => { e.preventDefault(); startPress(inc); }} onTouchEnd={stopPress}
-          >+</button>
-        </div>
-      </div>
-    );
-  };
-
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div style={{ padding: '28px 0', display: 'flex', gap: 24, alignItems: 'flex-start' }}>
@@ -398,9 +399,9 @@ export default function CardNewsTab() {
           <div style={{ fontSize: 10, color: 'var(--muted)', fontWeight: 600, letterSpacing: 1, paddingTop: 2 }}>
             슬라이드 {activeIdx + 1} 설정
           </div>
-          <StepperRow label="줄간격"   field="lineHeight"    min={40}   max={120} step={1}   decimals={0} />
-          <StepperRow label="자간"     field="letterSpacing" min={-3}   max={3}   step={0.1} decimals={1} />
-          <StepperRow label="본문 위치" field="bodyOffsetY"   min={-100} max={300} step={1}   decimals={0} />
+          <StepperRow label="줄간격"    min={40}   max={120} step={1}   decimals={0} value={activeSlide.lineHeight}    onUpdate={v => updateSlide({ lineHeight: v })}    onStartPress={startPress} onStopPress={stopPress} />
+          <StepperRow label="자간"      min={-3}   max={3}   step={0.1} decimals={1} value={activeSlide.letterSpacing} onUpdate={v => updateSlide({ letterSpacing: v })} onStartPress={startPress} onStopPress={stopPress} />
+          <StepperRow label="본문 위치" min={-100} max={300} step={1}   decimals={0} value={activeSlide.bodyOffsetY}   onUpdate={v => updateSlide({ bodyOffsetY: v })}   onStartPress={startPress} onStopPress={stopPress} />
         </div>
 
         {/* 슬라이드 탭 */}
