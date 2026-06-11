@@ -58,16 +58,85 @@ export default function MorningBriefTab() {
     setError(null);
     setResult(null);
 
-    const formData = new FormData();
-    formData.append('pdf', file);
-
     try {
-      const res = await fetch('/api/morning-brief', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error ?? '분석 실패');
-      setResult(data);
+      // PDF → base64 (청크 방식으로 스택 오버플로 방지)
+      const arrayBuffer = await file.arrayBuffer();
+      const uint8 = new Uint8Array(arrayBuffer);
+      let binary = '';
+      for (let i = 0; i < uint8.length; i += 8192) {
+        binary += String.fromCharCode(...uint8.subarray(i, i + 8192));
+      }
+      const base64 = btoa(binary);
+
+      const apiKey = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
+      if (!apiKey) throw new Error('API 키가 설정되지 않았습니다. next.config.js 환경변수를 확인하세요.');
+
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 4000,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'document',
+                source: {
+                  type: 'base64',
+                  media_type: 'application/pdf',
+                  data: base64,
+                },
+              },
+              {
+                type: 'text',
+                text: `이 PDF는 보건복지부 조간 신문 스크랩입니다. 기사 제목 목록을 아래 형식으로 정리해주세요.
+
+## 출력 형식 (정확히 준수)
+■ [날짜] 주요뉴스(복지부 조간스크랩)
+
+(보건의료)
+▲ 기사 제목
+▲ 기사 제목
+
+(사회복지)
+▲ 기사 제목
+▲ 기사 제목
+
+[주요 사설]
+▲ 기사 제목 (3~4개만)
+
+## 규칙
+- 표지, 빈 페이지, 광고는 건너뛰기
+- 인사이동, 부고, 訃告, 訃音 관련 제목은 완전히 제외
+- 중복되거나 유사한 기사는 대표 제목 하나로 통합
+- 언론사명 표기 없음
+- 제목 외 상세 내용(* 설명 등) 없이 제목만
+- (보건의료), (사회복지) 옆에 추가 설명 없이 그대로 표기
+- 해당 카테고리 기사가 없으면 카테고리 생략
+- 순수 텍스트만 출력`,
+              },
+            ],
+          }],
+        }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Claude API 오류 ${res.status}: ${errText}`);
+      }
+
+      const data = await res.json() as { content: Array<{ type: string; text: string }> };
+      const summary = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+      const resultData = { summary, pageCount: 0, fileName: file.name };
+      setResult(resultData);
       setPhase('done');
-      const updated = saveResult(data);
+      const updated = saveResult(resultData);
       setSavedList(updated);
     } catch (e) {
       setError(e instanceof Error ? e.message : '오류가 발생했습니다.');
@@ -206,9 +275,11 @@ export default function MorningBriefTab() {
                   <span style={{ fontSize: 13, color: 'var(--muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 340 }}>
                     📄 {result.fileName}
                   </span>
-                  <span style={{ fontSize: 12, color: 'var(--muted)', whiteSpace: 'nowrap', flexShrink: 0 }}>
-                    · {result.pageCount}페이지
-                  </span>
+                  {result.pageCount > 0 && (
+                    <span style={{ fontSize: 12, color: 'var(--muted)', whiteSpace: 'nowrap', flexShrink: 0 }}>
+                      · {result.pageCount}페이지
+                    </span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
                   <button
@@ -279,7 +350,7 @@ export default function MorningBriefTab() {
                         {item.label}
                       </p>
                       <p style={{ fontSize: 12, color: 'var(--muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        📄 {item.fileName} · {item.pageCount}페이지
+                        📄 {item.fileName}{item.pageCount > 0 ? ` · ${item.pageCount}페이지` : ''}
                       </p>
                     </div>
                     <button
