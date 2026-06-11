@@ -83,7 +83,7 @@ export default function IntroPage() {
             filter: 'drop-shadow(0 0 24px rgba(79,99,210,0.6))',
           }}
         >
-          ASH LAB.
+          ASH LAB
         </h1>
 
         <p

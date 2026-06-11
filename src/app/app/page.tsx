@@ -69,13 +69,16 @@ export default function AppPage() {
         padding: '0 36px',
       }}>
         {/* 로고 */}
-        <span style={{
-          fontSize: 17, fontWeight: 800, letterSpacing: 3,
-          background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-          fontFamily: 'Space Grotesk, monospace',
-          flexShrink: 0,
-        }}>ASH LAB.</span>
+        <span
+          onClick={() => window.location.reload()}
+          style={{
+            fontSize: 17, fontWeight: 800, letterSpacing: 3,
+            background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            fontFamily: 'Space Grotesk, monospace',
+            flexShrink: 0, cursor: 'pointer',
+          }}
+        >ASH LAB</span>
 
         {/* 중앙 탭 메뉴 */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
@@ -141,7 +144,7 @@ export default function AppPage() {
             background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
             marginBottom: 8, fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
-          }}>ASH LAB.</div>
+          }}>ASH LAB</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: 0.8 }}>
             안상훈 의원실 스마트워크 플랫폼
           </div>
