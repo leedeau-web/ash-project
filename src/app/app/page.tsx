@@ -3,22 +3,24 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-const NewsCommentTab = dynamic(() => import('../tabs/NewsCommentTab'), { ssr: false });
-const CardNewsTab    = dynamic(() => import('../tabs/CardNewsTab'),    { ssr: false });
+const HomeTab         = dynamic(() => import('../tabs/HomeTab'),         { ssr: false });
+const NewsCommentTab  = dynamic(() => import('../tabs/NewsCommentTab'),  { ssr: false });
+const CardNewsTab     = dynamic(() => import('../tabs/CardNewsTab'),     { ssr: false });
 const MorningBriefTab = dynamic(() => import('../tabs/MorningBriefTab'), { ssr: false });
 
-type TabId = 'news-comment' | 'card-news' | 'morning-brief';
+type TabId = 'home' | 'news-comment' | 'card-news' | 'morning-brief';
 
-const TABS = [
-  { id: 'news-comment'  as TabId, icon: '💬', label: '뉴스 댓글 분석',  Component: NewsCommentTab },
-  { id: 'card-news'     as TabId, icon: '📇', label: '카드뉴스 제작',   Component: CardNewsTab },
-  { id: 'morning-brief' as TabId, icon: '📰', label: '조간스크랩 요약', Component: MorningBriefTab },
+const NAV_TABS: { id: TabId; icon: string; label: string }[] = [
+  { id: 'home',          icon: '🏠', label: 'ASH LAB' },
+  { id: 'news-comment',  icon: '💬', label: '뉴스 댓글 분석' },
+  { id: 'card-news',     icon: '📇', label: '카드뉴스 제작' },
+  { id: 'morning-brief', icon: '📰', label: '조간스크랩 요약' },
 ];
 
 export default function AppPage() {
-  const [activeTab, setActiveTab]       = useState<TabId>('news-comment');
+  const [activeTab, setActiveTab]           = useState<TabId>('home');
   const [contentVisible, setContentVisible] = useState(true);
-  const [scrollY, setScrollY]           = useState(0);
+  const [scrollY, setScrollY]               = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -32,8 +34,16 @@ export default function AppPage() {
     setTimeout(() => { setActiveTab(id); setContentVisible(true); }, 180);
   };
 
-  const ActiveComponent = TABS.find(t => t.id === activeTab)?.Component ?? NewsCommentTab;
   const parallax = Math.min(scrollY * 0.38, 70);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':          return <HomeTab onNavigate={switchTab} />;
+      case 'news-comment':  return <NewsCommentTab />;
+      case 'card-news':     return <CardNewsTab />;
+      case 'morning-brief': return <MorningBriefTab />;
+    }
+  };
 
   return (
     <div style={{ minHeight: '100vh', background: '#0d0e1a' }}>
@@ -69,7 +79,7 @@ export default function AppPage() {
 
         {/* 중앙 탭 메뉴 */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
-          {TABS.map(tab => {
+          {NAV_TABS.map(tab => {
             const active = activeTab === tab.id;
             return (
               <button
@@ -77,7 +87,7 @@ export default function AppPage() {
                 onClick={() => switchTab(tab.id)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 7,
-                  height: 60, padding: '0 22px',
+                  height: 60, padding: '0 20px',
                   background: 'none', border: 'none',
                   borderBottom: active ? '2px solid #7c4dff' : '2px solid transparent',
                   cursor: 'pointer', fontFamily: 'inherit',
@@ -101,75 +111,39 @@ export default function AppPage() {
         </div>
 
         {/* 우측 홈 링크 */}
-        <a href="/" className="nav-link-home" style={{ flexShrink: 0 }}>
-          ashlab.co.kr
-        </a>
+        <a href="/" className="nav-link-home" style={{ flexShrink: 0 }}>ashlab.co.kr</a>
       </nav>
 
-      {/* ── 히어로 배너 ── */}
-      <div style={{ position: 'relative', height: 200, marginTop: 60, overflow: 'hidden' }}>
-        {/* 배경 이미지 (어두운 처리 + parallax) */}
+      {/* ── 히어로 배너 (사진 없이 텍스트만) ── */}
+      <div style={{ position: 'relative', height: 160, marginTop: 60, overflow: 'hidden' }}>
+        {/* 배경 이미지 (어둡게 + parallax) */}
         <div style={{
-          position: 'absolute', inset: '-50px 0',
+          position: 'absolute', inset: '-40px 0',
           backgroundImage: 'url(/senator.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: `center calc(50% + ${parallax}px)`,
-          filter: 'brightness(0.16) blur(1.5px)',
+          filter: 'brightness(0.12) blur(2px)',
           transform: 'scale(1.06)',
-          willChange: 'background-position',
         }} />
-        {/* 수평 페이드 오버레이 */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(90deg, rgba(13,14,26,0.9) 0%, rgba(13,14,26,0.45) 55%, rgba(13,14,26,0.08) 100%)',
-        }} />
-        {/* 하단 페이드 */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(180deg, transparent 40%, rgba(13,14,26,0.75) 100%)',
-        }} />
+        {/* 오버레이 */}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(13,14,26,0.72)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(13,14,26,0.85) 100%)' }} />
 
-        {/* 히어로 콘텐츠 */}
+        {/* 텍스트 */}
         <div style={{
           position: 'relative', zIndex: 1,
           height: '100%', maxWidth: 1200, margin: '0 auto',
           padding: '0 44px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center',
         }}>
-          {/* 좌측 텍스트 */}
-          <div>
-            <div style={{
-              fontSize: 38, fontWeight: 800, letterSpacing: 5,
-              background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              marginBottom: 10, fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
-            }}>ASH LAB.</div>
-            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.58)', letterSpacing: 0.8 }}>
-              안상훈 의원실 스마트워크 플랫폼
-            </div>
-          </div>
-
-          {/* 우측 사진 */}
           <div style={{
-            width: '200px', height: '200px',
-            borderRadius: '50%',
-            border: '3px solid rgba(79,99,210,0.55)',
-            boxShadow: '0 0 48px rgba(79,99,210,0.28), 0 0 0 6px rgba(79,99,210,0.08)',
-            overflow: 'hidden',
-            flexShrink: 0,
-            transform: `translateY(${-parallax * 0.12}px)`,
-            transition: 'transform 0.05s linear',
-          }}>
-            <img
-              src="/senator.jpg"
-              alt="안상훈 의원"
-              style={{
-                width: '100%', height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                borderRadius: '50%',
-              }}
-            />
+            fontSize: 34, fontWeight: 800, letterSpacing: 5,
+            background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            marginBottom: 8, fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
+          }}>ASH LAB.</div>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', letterSpacing: 0.8 }}>
+            안상훈 의원실 스마트워크 플랫폼
           </div>
         </div>
       </div>
@@ -179,7 +153,7 @@ export default function AppPage() {
         className={contentVisible ? 'tab-visible' : 'tab-hidden'}
         style={{ maxWidth: 1200, margin: '0 auto', padding: '0 44px 80px' }}
       >
-        <ActiveComponent />
+        {renderContent()}
       </div>
     </div>
   );
