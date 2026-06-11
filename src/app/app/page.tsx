@@ -104,7 +104,7 @@ export default function AppPage() {
                   ...(active
                     ? { background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
                         WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }
-                    : { color: 'rgba(255,255,255,0.48)' }),
+                    : { color: 'rgba(255,255,255,0.7)' }),
                 }}>
                   {tab.label}
                 </span>

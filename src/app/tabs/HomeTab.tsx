@@ -71,7 +71,7 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
           {/* 소개 텍스트 */}
           <p style={{
             fontSize: 15,
-            color: 'rgba(255,255,255,0.52)',
+            color: 'rgba(255,255,255,0.75)',
             lineHeight: 1.95,
             marginBottom: 44,
             maxWidth: 560,
@@ -92,8 +92,8 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
                 style={{
                   display: 'flex', alignItems: 'center', gap: 18,
                   padding: '18px 22px',
-                  background: '#13152a',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: '#1e2140',
+                  border: '1px solid rgba(255,255,255,0.12)',
                   borderRadius: 14,
                   cursor: 'pointer',
                   textAlign: 'left',
@@ -107,8 +107,8 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
                   e.currentTarget.style.transform = 'translateX(5px)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.background = '#13152a';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+                  e.currentTarget.style.background = '#1e2140';
                   e.currentTarget.style.transform = 'translateX(0)';
                 }}
               >
@@ -124,12 +124,12 @@ export default function HomeTab({ onNavigate }: HomeTabProps) {
                   <div style={{ fontSize: 15, fontWeight: 600, color: '#fff', marginBottom: 5 }}>
                     {f.title}
                   </div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.42)', lineHeight: 1.55, wordBreak: 'keep-all' }}>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.68)', lineHeight: 1.55, wordBreak: 'keep-all' }}>
                     {f.desc}
                   </div>
                 </div>
 
-                <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 18, flexShrink: 0 }}>→</span>
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 18, flexShrink: 0 }}>→</span>
               </button>
             ))}
           </div>
