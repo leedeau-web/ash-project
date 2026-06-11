@@ -1,128 +1,179 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const NewsCommentTab = dynamic(() => import('../tabs/NewsCommentTab'), { ssr: false });
-const CardNewsTab = dynamic(() => import('../tabs/CardNewsTab'), { ssr: false });
+const CardNewsTab    = dynamic(() => import('../tabs/CardNewsTab'),    { ssr: false });
 const MorningBriefTab = dynamic(() => import('../tabs/MorningBriefTab'), { ssr: false });
 
-const TABS = [
-  { id: 'news-comment',  icon: '📰',  label: '뉴스 댓글 분석',  component: NewsCommentTab,  badge: null },
-  { id: 'card-news',     icon: '🗞️', label: '카드뉴스 제작',   component: CardNewsTab,     badge: null },
-  { id: 'morning-brief', icon: '📰',  label: '조간스크랩 요약', component: MorningBriefTab, badge: null },
-] as const;
+type TabId = 'news-comment' | 'card-news' | 'morning-brief';
 
-type TabId = typeof TABS[number]['id'];
+const TABS = [
+  { id: 'news-comment'  as TabId, icon: '💬', label: '뉴스 댓글 분석',  Component: NewsCommentTab },
+  { id: 'card-news'     as TabId, icon: '📇', label: '카드뉴스 제작',   Component: CardNewsTab },
+  { id: 'morning-brief' as TabId, icon: '📰', label: '조간스크랩 요약', Component: MorningBriefTab },
+];
 
 export default function AppPage() {
-  const [activeTab, setActiveTab] = useState<TabId>('news-comment');
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [activeTab, setActiveTab]       = useState<TabId>('news-comment');
+  const [contentVisible, setContentVisible] = useState(true);
+  const [scrollY, setScrollY]           = useState(0);
 
-  const ActiveComponent = TABS.find(t => t.id === activeTab)?.component ?? NewsCommentTab;
+  useEffect(() => {
+    const onScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const switchTab = (id: TabId) => {
+    if (id === activeTab) return;
+    setContentVisible(false);
+    setTimeout(() => { setActiveTab(id); setContentVisible(true); }, 180);
+  };
+
+  const ActiveComponent = TABS.find(t => t.id === activeTab)?.Component ?? NewsCommentTab;
+  const parallax = Math.min(scrollY * 0.38, 70);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <div style={{ minHeight: '100vh', background: '#0d0e1a' }}>
+      <style>{`
+        @keyframes tabIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .tab-visible { animation: tabIn 0.22s ease forwards; }
+        .tab-hidden  { opacity: 0; pointer-events: none; }
+        .nav-link-home { font-size: 13px; color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.15s; }
+        .nav-link-home:hover { color: rgba(255,255,255,0.72); }
+      `}</style>
 
-      {/* 사이드바 토글 버튼 */}
-      <button
-        onClick={() => setSidebarVisible(v => !v)}
-        style={{
-          position: 'fixed',
-          left: sidebarVisible ? 210 : 0,
-          top: '50%', transform: 'translateY(-50%)',
-          zIndex: 200, width: 20, height: 48,
-          background: '#4f63d2', border: 'none',
-          borderRadius: '0 8px 8px 0', cursor: 'pointer',
-          color: '#fff', fontSize: 12,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'left 0.3s ease',
-        }}
-      >
-        {sidebarVisible ? '◀' : '▶'}
-      </button>
-
-      {/* 사이드바 */}
-      <div style={{
-        position: 'fixed', left: 0, top: 0, bottom: 0, width: 220,
-        background: 'var(--surface)', borderRight: '1px solid var(--border)',
-        display: 'flex', flexDirection: 'column', zIndex: 100,
-        boxShadow: '2px 0 16px rgba(79,99,210,0.06)',
-        transform: sidebarVisible ? 'translateX(0)' : 'translateX(-220px)',
-        transition: 'transform 0.3s ease',
+      {/* ── 상단 네비게이션 ── */}
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+        height: 60,
+        background: 'rgba(13,14,26,0.97)',
+        backdropFilter: 'blur(14px)',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        display: 'flex', alignItems: 'center',
+        padding: '0 36px',
       }}>
         {/* 로고 */}
-        <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{
-              width: 34, height: 34, borderRadius: 10,
-              background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 16, color: '#fff', fontWeight: 700, flexShrink: 0,
-            }}>A</div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, color: 'var(--accent)', fontFamily: 'Space Grotesk, monospace' }}>ASH</div>
-              <div style={{ fontSize: 10, color: 'var(--muted)', letterSpacing: 0.5 }}>PROJECT</div>
-            </div>
-          </div>
-        </div>
+        <span style={{
+          fontSize: 17, fontWeight: 800, letterSpacing: 3,
+          background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+          fontFamily: 'Space Grotesk, monospace',
+          flexShrink: 0,
+        }}>ASH LAB.</span>
 
-        {/* 탭 메뉴 */}
-        <nav style={{ flex: 1, padding: '14px 10px', overflowY: 'auto' }}>
-          <div style={{ fontSize: 10, color: 'var(--muted)', letterSpacing: 1.5, padding: '4px 10px 10px', fontWeight: 600 }}>MENU</div>
+        {/* 중앙 탭 메뉴 */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
           {TABS.map(tab => {
-            const isActive = activeTab === tab.id;
+            const active = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => switchTab(tab.id)}
                 style={{
-                  width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-                  padding: '10px 12px', borderRadius: 10, border: 'none',
-                  background: isActive ? 'var(--accent-light)' : 'transparent',
-                  color: isActive ? 'var(--accent)' : 'var(--text2)',
-                  fontSize: 13, fontWeight: isActive ? 600 : 400,
-                  cursor: 'pointer', marginBottom: 2, transition: 'all 0.15s', textAlign: 'left',
+                  display: 'flex', alignItems: 'center', gap: 7,
+                  height: 60, padding: '0 22px',
+                  background: 'none', border: 'none',
+                  borderBottom: active ? '2px solid #7c4dff' : '2px solid transparent',
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'border-color 0.15s',
+                  flexShrink: 0,
                 }}
-                onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.background = 'var(--surface2)'; }}
-                onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}
               >
-                <span style={{ fontSize: 16 }}>{tab.icon}</span>
-                <span style={{ flex: 1 }}>{tab.label}</span>
-                {tab.badge && (
-                  <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 6, background: 'var(--accent)', color: '#fff', fontWeight: 700 }}>
-                    {tab.badge}
-                  </span>
-                )}
-                {isActive && <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--accent)' }} />}
+                <span style={{ fontSize: 15 }}>{tab.icon}</span>
+                <span style={{
+                  fontSize: 14, fontWeight: active ? 600 : 400,
+                  ...(active
+                    ? { background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+                        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }
+                    : { color: 'rgba(255,255,255,0.48)' }),
+                }}>
+                  {tab.label}
+                </span>
               </button>
             );
           })}
-        </nav>
+        </div>
 
-        {/* 하단 버전 */}
-        <div style={{ padding: '14px 20px', borderTop: '1px solid var(--border)' }}>
-          <div style={{ fontSize: 10, color: 'var(--muted)', fontFamily: 'Space Grotesk, monospace' }}>v1.0.0</div>
-          <div style={{ fontSize: 10, color: 'var(--muted)', marginTop: 2 }}>Powered by Claude AI</div>
+        {/* 우측 홈 링크 */}
+        <a href="/" className="nav-link-home" style={{ flexShrink: 0 }}>
+          ashlab.co.kr
+        </a>
+      </nav>
+
+      {/* ── 히어로 배너 ── */}
+      <div style={{ position: 'relative', height: 200, marginTop: 60, overflow: 'hidden' }}>
+        {/* 배경 이미지 (어두운 처리 + parallax) */}
+        <div style={{
+          position: 'absolute', inset: '-50px 0',
+          backgroundImage: 'url(/senator.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: `center calc(50% + ${parallax}px)`,
+          filter: 'brightness(0.16) blur(1.5px)',
+          transform: 'scale(1.06)',
+          willChange: 'background-position',
+        }} />
+        {/* 수평 페이드 오버레이 */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(90deg, rgba(13,14,26,0.9) 0%, rgba(13,14,26,0.45) 55%, rgba(13,14,26,0.08) 100%)',
+        }} />
+        {/* 하단 페이드 */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(180deg, transparent 40%, rgba(13,14,26,0.75) 100%)',
+        }} />
+
+        {/* 히어로 콘텐츠 */}
+        <div style={{
+          position: 'relative', zIndex: 1,
+          height: '100%', maxWidth: 1200, margin: '0 auto',
+          padding: '0 44px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
+          {/* 좌측 텍스트 */}
+          <div>
+            <div style={{
+              fontSize: 38, fontWeight: 800, letterSpacing: 5,
+              background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              marginBottom: 10, fontFamily: 'Space Grotesk, monospace', lineHeight: 1,
+            }}>ASH LAB.</div>
+            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.58)', letterSpacing: 0.8 }}>
+              안상훈 의원실 스마트워크 플랫폼
+            </div>
+          </div>
+
+          {/* 우측 사진 */}
+          <img
+            src="/senator.jpg"
+            alt="안상훈 의원"
+            style={{
+              width: 152, height: 152,
+              borderRadius: '50%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              border: '3px solid rgba(79,99,210,0.55)',
+              boxShadow: '0 0 48px rgba(79,99,210,0.28), 0 0 0 6px rgba(79,99,210,0.08)',
+              transform: `translateY(${-parallax * 0.12}px)`,
+              transition: 'transform 0.05s linear',
+              flexShrink: 0,
+            }}
+          />
         </div>
       </div>
 
-      {/* 메인 콘텐츠 */}
-      <div style={{ marginLeft: sidebarVisible ? 220 : 0, minHeight: '100vh', transition: 'margin-left 0.3s ease' }}>
-        <header style={{
-          position: 'sticky', top: 0, zIndex: 50,
-          background: 'rgba(245,246,250,0.92)', backdropFilter: 'blur(8px)',
-          borderBottom: '1px solid var(--border)', padding: '14px 32px',
-          display: 'flex', alignItems: 'center', gap: 12,
-        }}>
-          <h1 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>
-            {TABS.find(t => t.id === activeTab)?.icon}{' '}
-            {TABS.find(t => t.id === activeTab)?.label}
-          </h1>
-        </header>
-        <main style={{ padding: '0 32px 48px' }}>
-          <ActiveComponent />
-        </main>
+      {/* ── 탭 콘텐츠 ── */}
+      <div
+        className={contentVisible ? 'tab-visible' : 'tab-hidden'}
+        style={{ maxWidth: 1200, margin: '0 auto', padding: '0 44px 80px' }}
+      >
+        <ActiveComponent />
       </div>
     </div>
   );
