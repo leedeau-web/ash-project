@@ -17,11 +17,112 @@ const NAV_TABS: { id: TabId; icon: string; label: string }[] = [
   { id: 'morning-brief', icon: '📰', label: '조간스크랩 요약' },
 ];
 
+const PASSWORD = '0917';
+
+function LockScreen({ onUnlock }: { onUnlock: () => void }) {
+  const [pw, setPw]       = useState('');
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  const submit = () => {
+    if (pw === PASSWORD) {
+      localStorage.setItem('ash-auth', 'true');
+      onUnlock();
+    } else {
+      setError(true);
+      setShake(true);
+      setPw('');
+      setTimeout(() => setShake(false), 500);
+    }
+  };
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: '#0d0e1a',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      fontFamily: 'inherit',
+    }}>
+      <style>{`
+        @keyframes shake {
+          0%,100% { transform: translateX(0); }
+          20%,60%  { transform: translateX(-8px); }
+          40%,80%  { transform: translateX(8px); }
+        }
+        .lock-shake { animation: shake 0.45s ease; }
+      `}</style>
+
+      {/* 로고 */}
+      <div style={{
+        fontSize: 32, fontWeight: 800, letterSpacing: 4, marginBottom: 10,
+        background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+        WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+        fontFamily: 'Space Grotesk, monospace',
+      }}>ASH LAB</div>
+
+      {/* 서브텍스트 */}
+      <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 40, letterSpacing: 0.5 }}>
+        안상훈 의원실 전용 플랫폼입니다
+      </div>
+
+      {/* 입력 폼 */}
+      <div className={shake ? 'lock-shake' : ''} style={{ width: 300, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <input
+          type="password"
+          value={pw}
+          onChange={e => { setPw(e.target.value); setError(false); }}
+          onKeyDown={e => e.key === 'Enter' && submit()}
+          placeholder="비밀번호 입력"
+          autoFocus
+          style={{
+            width: '100%', padding: '14px 18px',
+            borderRadius: 12, fontSize: 16, textAlign: 'center',
+            border: `1.5px solid ${error ? '#f87171' : 'rgba(255,255,255,0.15)'}`,
+            background: '#1e2140', color: '#fff',
+            outline: 'none', letterSpacing: 6,
+            transition: 'border-color 0.2s',
+            boxSizing: 'border-box',
+          }}
+          onFocus={e => { if (!error) e.target.style.borderColor = '#4f63d2'; }}
+          onBlur={e => { if (!error) e.target.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+        />
+
+        {error && (
+          <div style={{ fontSize: 12, color: '#f87171', textAlign: 'center', marginTop: -4 }}>
+            비밀번호가 올바르지 않습니다
+          </div>
+        )}
+
+        <button
+          onClick={submit}
+          style={{
+            width: '100%', padding: '14px',
+            borderRadius: 12, border: 'none',
+            background: 'linear-gradient(135deg, #4f63d2, #7c4dff)',
+            color: '#fff', fontSize: 15, fontWeight: 700,
+            cursor: 'pointer', fontFamily: 'inherit',
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          확인
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function AppPage() {
+  const [unlocked, setUnlocked]             = useState(false);
   const [activeTab, setActiveTab]           = useState<TabId>('home');
   const [contentVisible, setContentVisible] = useState(true);
   const [scrollY, setScrollY]               = useState(0);
   const [isMobile, setIsMobile]             = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('ash-auth') === 'true') setUnlocked(true);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -52,6 +153,8 @@ export default function AppPage() {
       case 'morning-brief': return <MorningBriefTab />;
     }
   };
+
+  if (!unlocked) return <LockScreen onUnlock={() => setUnlocked(true)} />;
 
   return (
     <div style={{ minHeight: '100vh', background: '#0d0e1a' }}>
