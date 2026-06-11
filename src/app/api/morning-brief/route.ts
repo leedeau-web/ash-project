@@ -19,14 +19,14 @@ export async function POST(req: NextRequest) {
 
     // 원본 PDF 로드 후 앞 6페이지만 추출해 새 PDF 생성
     const arrayBuffer = await file.arrayBuffer();
-    const srcDoc = await PDFDocument.load(arrayBuffer);
-    const totalPages = srcDoc.getPageCount();
+    const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const totalPages = pdfDoc.getPageCount();
     const pageCount = Math.min(totalPages, MAX_PAGES);
 
-    const trimDoc = await PDFDocument.create();
-    const copied = await trimDoc.copyPagesFrom(srcDoc, Array.from({ length: pageCount }, (_, i) => i));
-    copied.forEach(p => trimDoc.addPage(p));
-    const trimBytes = await trimDoc.save();
+    const newPdf = await PDFDocument.create();
+    const pages = await newPdf.copyPages(pdfDoc, Array.from({ length: pageCount }, (_, i) => i));
+    pages.forEach(p => newPdf.addPage(p));
+    const trimBytes = await newPdf.save();
 
     // 앞 6페이지 PDF → base64
     const base64 = Buffer.from(trimBytes).toString('base64');
