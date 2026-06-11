@@ -166,8 +166,8 @@ function StepperRow({
           onChange={e => set(Number(e.target.value))}
           style={{
             flex: 1, padding: '5px 4px', borderRadius: 6,
-            border: '1px solid #d0d5e8', background: '#fff',
-            color: 'var(--text)', fontSize: 13, textAlign: 'center',
+            border: '1px solid #d0d5e8', background: '#ffffff',
+            color: '#111111', fontSize: 13, textAlign: 'center',
             outline: 'none', fontFamily: 'monospace',
           }}
           onFocus={e => e.target.style.borderColor = 'var(--accent)'}
@@ -405,8 +405,8 @@ export default function CardNewsTab() {
               placeholder="2026.06.05."
               style={{
                 width: '100%', padding: '10px 14px', borderRadius: 8,
-                border: '1.5px solid var(--border2)', background: '#fff',
-                color: 'var(--text)', fontSize: 14, outline: 'none',
+                border: '1.5px solid var(--border2)', background: '#ffffff',
+                color: '#111111', fontSize: 14, outline: 'none',
                 boxSizing: 'border-box',
               }}
               onFocus={e => e.target.style.borderColor = 'var(--accent)'}
@@ -471,8 +471,8 @@ export default function CardNewsTab() {
                 placeholder="■ 제목을 입력하세요"
                 style={{
                   width: '100%', padding: '10px 14px', borderRadius: 8, marginBottom: 12,
-                  border: '1.5px solid var(--border2)', background: '#fff',
-                  color: 'var(--text)', fontSize: 14, outline: 'none',
+                  border: '1.5px solid var(--border2)', background: '#ffffff',
+                  color: '#111111', fontSize: 14, outline: 'none',
                   boxSizing: 'border-box',
                 }}
                 onFocus={e => e.target.style.borderColor = 'var(--accent)'}
@@ -492,8 +492,8 @@ export default function CardNewsTab() {
             rows={14}
             style={{
               width: '100%', padding: '12px 14px', borderRadius: 8,
-              border: '1.5px solid var(--border2)', background: '#fff',
-              color: 'var(--text)', fontSize: 13, lineHeight: 1.7,
+              border: '1.5px solid var(--border2)', background: '#ffffff',
+              color: '#111111', fontSize: 13, lineHeight: 1.7,
               resize: 'vertical', outline: 'none', boxSizing: 'border-box',
             }}
             onFocus={e => e.target.style.borderColor = 'var(--accent)'}

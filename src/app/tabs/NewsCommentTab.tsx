@@ -480,8 +480,8 @@ export default function NewsCommentTab() {
                       placeholder={`URL ${i + 1} — https://www.chosun.com/...`}
                       style={{
                         flex: 1, padding: '11px 16px', borderRadius: 10,
-                        border: '1.5px solid var(--border2)', background: '#fff',
-                        color: 'var(--text)', fontSize: 14, outline: 'none', transition: 'border-color 0.2s',
+                        border: '1.5px solid var(--border2)', background: '#ffffff',
+                        color: '#111111', fontSize: 14, outline: 'none', transition: 'border-color 0.2s',
                       }}
                       onFocus={e => e.target.style.borderColor = 'var(--accent)'}
                       onBlur={e => e.target.style.borderColor = 'var(--border2)'}

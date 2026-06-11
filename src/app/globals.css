@@ -83,9 +83,11 @@ input[type=text],
 input[type=url],
 input[type=email],
 input[type=search],
+input[type=number],
+input[type=password],
 textarea {
-  background: #ffffff;
-  color: #1a1f36;
+  background: #ffffff !important;
+  color: #111111 !important;
   border: 1.5px solid #d0d5e8;
   border-radius: 10px;
   font-family: inherit;
@@ -96,6 +98,8 @@ input[type=text]:focus,
 input[type=url]:focus,
 input[type=email]:focus,
 input[type=search]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
 textarea:focus {
   outline: none;
   border-color: var(--accent);
@@ -105,8 +109,10 @@ input[type=text]::placeholder,
 input[type=url]::placeholder,
 input[type=email]::placeholder,
 input[type=search]::placeholder,
+input[type=number]::placeholder,
+input[type=password]::placeholder,
 textarea::placeholder {
-  color: #9aa0b8;
+  color: #9aa0b8 !important;
 }
 
 /* 태그/뱃지 공통 */
