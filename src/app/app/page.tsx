@@ -150,23 +150,27 @@ export default function AppPage() {
           </div>
 
           {/* 우측 사진 */}
-          <img
-            src="/senator.jpg"
-            alt="안상훈 의원"
-            style={{
-              display: 'block',
-              width: '160px', height: '160px',
-              minWidth: '160px', minHeight: '160px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              objectPosition: 'center top',
-              border: '3px solid rgba(79,99,210,0.55)',
-              boxShadow: '0 0 48px rgba(79,99,210,0.28), 0 0 0 6px rgba(79,99,210,0.08)',
-              transform: `translateY(${-parallax * 0.12}px)`,
-              transition: 'transform 0.05s linear',
-              flexShrink: 0,
-            }}
-          />
+          <div style={{
+            width: '200px', height: '200px',
+            borderRadius: '50%',
+            border: '3px solid rgba(79,99,210,0.55)',
+            boxShadow: '0 0 48px rgba(79,99,210,0.28), 0 0 0 6px rgba(79,99,210,0.08)',
+            overflow: 'hidden',
+            flexShrink: 0,
+            transform: `translateY(${-parallax * 0.12}px)`,
+            transition: 'transform 0.05s linear',
+          }}>
+            <img
+              src="/senator.jpg"
+              alt="안상훈 의원"
+              style={{
+                width: '100%', height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                borderRadius: '50%',
+              }}
+            />
+          </div>
         </div>
       </div>
 
