@@ -6,7 +6,8 @@ import { PDFDocument } from 'pdf-lib';
 
 export const maxDuration = 120;
 
-const MAX_PAGES = 6;
+const START_PAGE = 1; // 표지(1페이지, 인덱스 0) 제외
+const MAX_PAGES = 6;  // 2~7페이지(인덱스 1~6) 최대 6페이지
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,18 +18,18 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) throw new Error('ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.');
 
-    // 원본 PDF 로드 후 앞 6페이지만 추출해 새 PDF 생성
+    // 표지(1페이지) 제외 후 2~7페이지(인덱스 1~6) 추출해 새 PDF 생성
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer);
     const totalPages = pdfDoc.getPageCount();
-    const pageCount = Math.min(totalPages, MAX_PAGES);
+    const pageCount = Math.min(Math.max(0, totalPages - START_PAGE), MAX_PAGES);
 
     const newPdf = await PDFDocument.create();
-    const pages = await newPdf.copyPages(pdfDoc, Array.from({ length: pageCount }, (_, i) => i));
+    const pages = await newPdf.copyPages(pdfDoc, Array.from({ length: pageCount }, (_, i) => START_PAGE + i));
     pages.forEach(p => newPdf.addPage(p));
     const trimBytes = await newPdf.save();
 
-    // 앞 6페이지 PDF → base64
+    // 추출 페이지 PDF → base64
     const base64 = Buffer.from(trimBytes).toString('base64');
 
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -54,7 +55,7 @@ export async function POST(req: NextRequest) {
             },
             {
               type: 'text',
-              text: `이 PDF는 보건복지부 조간 신문 스크랩입니다. 기사 제목 목록을 아래 형식으로 정리해주세요.
+              text: `이 PDF는 보건복지부 조간 신문 스크랩입니다. 목차 페이지에서 보건의료, 사회복지, 오피니언/사설/칼럼 섹션을 전부 찾아 아래 형식으로 정리해주세요. 오피니언/사설/칼럼은 [주요 사설] 섹션으로 언론사명과 함께 최대 4개를 표기합니다.
 
 ## 출력 형식 (정확히 준수)
 ■ [날짜] 주요뉴스(복지부 조간스크랩)
@@ -73,7 +74,7 @@ export async function POST(req: NextRequest) {
 ## 규칙
 - (보건의료): 최대 15개. 건보/심평원/수가/의료정책/감염병 관련 기사 우선
 - (사회복지): 최대 8개. 국민연금/기초연금/기초수급/장애인/돌봄 관련 기사 우선
-- [주요 사설]: 최대 4개. 반드시 제목 뒤에 [언론사명] 표기 (예: ▲ 제목 [한겨레])
+- [주요 사설]: 목차의 오피니언/사설/칼럼 섹션에서 전부 추출. 최대 4개. 반드시 제목 뒤에 [언론사명] 표기 (예: ▲ 제목 [한겨레])
 - 인사이동, 부고, 訃告, 訃音 관련 제목은 완전히 제외
 - 동일하거나 유사한 기사는 대표 제목 하나로 통합
 - 제목만 표기, * 설명 등 부가 내용 없음
