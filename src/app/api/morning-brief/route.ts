@@ -86,13 +86,19 @@ export async function POST(req: NextRequest) {
       }),
     });
 
+    const rawText = await res.text();
     if (!res.ok) {
-      const errBody = await res.text();
-      console.error('Claude API 에러 응답:', errBody);
-      throw new Error(`Claude API ${res.status}`);
+      console.error('Claude API 에러 응답:', rawText);
+      throw new Error(`Claude API ${res.status}: ${rawText.slice(0, 200)}`);
     }
 
-    const data = await res.json() as { content: Array<{ type: string; text: string }> };
+    let data: { content: Array<{ type: string; text: string }> };
+    try {
+      data = JSON.parse(rawText) as { content: Array<{ type: string; text: string }> };
+    } catch {
+      console.error('Claude API 응답 JSON 파싱 실패:', rawText);
+      throw new Error(`Claude API 응답 파싱 실패: ${rawText.slice(0, 200)}`);
+    }
     const summary = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
 
     return NextResponse.json({ summary, pageCount, fileName: file.name });

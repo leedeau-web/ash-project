@@ -63,8 +63,18 @@ export default function MorningBriefTab() {
       formData.append('pdf', file);
 
       const res = await fetch('/api/morning-brief', { method: 'POST', body: formData });
+      if (!res.ok) {
+        const errText = await res.text();
+        let errMsg: string;
+        try {
+          errMsg = (JSON.parse(errText) as { error?: string }).error ?? `서버 오류 (${res.status})`;
+        } catch {
+          errMsg = errText || `서버 오류 (${res.status})`;
+        }
+        throw new Error(errMsg);
+      }
       const json = await res.json() as { summary?: string; pageCount?: number; fileName?: string; error?: string };
-      if (!res.ok || json.error) throw new Error(json.error ?? '분석 실패');
+      if (json.error) throw new Error(json.error);
 
       const resultData = { summary: json.summary ?? '', pageCount: json.pageCount ?? 0, fileName: file.name };
       setResult(resultData);
