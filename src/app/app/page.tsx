@@ -7,14 +7,16 @@ const HomeTab         = dynamic(() => import('../tabs/HomeTab'),         { ssr: 
 const NewsCommentTab  = dynamic(() => import('../tabs/NewsCommentTab'),  { ssr: false });
 const CardNewsTab     = dynamic(() => import('../tabs/CardNewsTab'),     { ssr: false });
 const MorningBriefTab = dynamic(() => import('../tabs/MorningBriefTab'), { ssr: false });
+const ElectionTab     = dynamic(() => import('../tabs/ElectionTab'),     { ssr: false });
 
-type TabId = 'home' | 'news-comment' | 'card-news' | 'morning-brief';
+type TabId = 'home' | 'news-comment' | 'card-news' | 'morning-brief' | 'election';
 
 const NAV_TABS: { id: TabId; icon: string; label: string }[] = [
   { id: 'home',          icon: '🏠', label: 'ASH LAB' },
   { id: 'news-comment',  icon: '💬', label: '뉴스 댓글 분석' },
   { id: 'card-news',     icon: '📇', label: '카드뉴스 제작' },
   { id: 'morning-brief', icon: '📰', label: '조간스크랩 요약' },
+  { id: 'election',      icon: '🗺️', label: '선거구 분석' },
 ];
 
 const PASSWORD = '0917';
@@ -151,6 +153,7 @@ export default function AppPage() {
       case 'news-comment':  return <NewsCommentTab />;
       case 'card-news':     return <CardNewsTab />;
       case 'morning-brief': return <MorningBriefTab />;
+      case 'election':      return <ElectionTab />;
     }
   };
 
