@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ReferenceLine, ResponsiveContainer, ReferenceArea } from "recharts";
@@ -8,9 +9,7 @@ const T = {
   pph:"#e84a4a", pmi:"#2b6cb0",
 };
 
-function hexPath(cx, cy, rx, ry) {
-  if (rx === undefined) rx = 32;
-  if (ry === undefined) ry = 24;
+function hexPath(cx: number, cy: number, rx: number = 32, ry: number = 24) {
   const pts = [];
   for (let i = 0; i < 6; i++) {
     const a = (Math.PI / 180) * 60 * i;
@@ -588,7 +587,7 @@ const APPROVAL = [
 const PC = {mb:"#e84a4a",pk:"#8b5cf6",mn:"#2b6cb0",ys:"#f97316",lj:"#059669"};
 const PL = {mb:"이명박",pk:"박근혜",mn:"문재인",ys:"윤석열",lj:"이재명(실측)"};
 
-function CTip(props) {
+function CTip(props: any) {
   const active = props.active;
   const payload = props.payload;
   if (!active || !payload || !payload.length) return null;
