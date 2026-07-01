@@ -773,8 +773,8 @@ export default function ElectionTab(){
           </div>
 
           {/* SVG 지도 — 전체 너비 */}
-          <div style={{background:"#f8fafd",padding:"8px 16px"}}>
-            <svg viewBox="0 0 1100 590" style={{width:"100%",display:"block",maxHeight:"52vh"}}>
+          <div style={{background:"#f8fafd",padding:"0"}}>
+            <svg viewBox="0 0 1100 590" style={{width:"100%",display:"block"}}>
               <ellipse cx={550} cy={305} rx={520} ry={240} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
