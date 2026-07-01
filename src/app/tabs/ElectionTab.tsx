@@ -605,6 +605,30 @@ const DISTRICTS = [
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:48.9,m:51.0,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
 ];
 
+const INSIGHTS = {
+  yangcheon_gap: "모든 선거에서 박빙. 20대 대선 +3.7%p 신승, 8회 지선 +19.1%p 대승. 22대 총선 -1.6%p 패배, 21대 대선 -7.0%p 패배. 비례 국힘 +11.8%p 우위. 9회 지선도 재박빙. 후보 경쟁력 강화 시 탈환 가능. 개혁신당 등 제3지대 표 통합이 관건. ★★★ 1순위",
+  ydeungpo_gap: "20대 대선 +7.0%p, 8회 지선 +21.9%p로 국힘 강세였으나 22대 총선 -12.8%p 대패. 비례 국힘 +10.9%p 우위. 21대 대선 -4.4%p 패배, 9회 지선 국힘 신승. 총선 패배 폭이 크지만 구조적으로 보수 지지층 탄탄. 스타 후보 발굴 또는 현역 지역 기반 흡수 전략 필요. ★★★ 1순위",
+  ydeungpo_eul: "20대 대선 +7.0%p, 8회 지선 +21.9%p. 22대 총선 -1.2%p로 박빙 패배. 비례 국힘 +10.9%p 우위. 21대 대선 -4.4%p 패배, 9회 지선 국힘 신승. 총선에서 현역 김민석의 지역 밀착력이 변수이나 정당 지지도 구조상 탈환 가능. ★★★ 1순위",
+  mapo_gap: "22대 총선 조정훈(국힘) 당선(+0.6%p). 지역 연고 강한 현역 우위. 20대 대선 박빙, 21대 대선 -9.3%p로 민주 우세. 9회 지선 0.3%p 초박빙. 조정훈 후보 유지 여부와 지역 기반 강화가 최대 변수. 현역 프리미엄 최대 활용 필요.",
+  yongsan: "20대 대선 +16.5%p, 8회 지선 +31.6%p 압승. 21대 대선 +6.5%p, 9회 지선 +16.9%p. 전 선거에서 국힘 우세. 현역 권영세 지역구. 보수 텃밭. 재선 방어 중점.",
+  jsd_eul: "20대 대선 +5.6%p, 8회 지선 +18.6%p. 22대 총선 -2.3%p 박빙 패배. 비례 국힘 +14.0%p — 한강벨트 최고 수준. 21대 대선 -4.8%p, 9회 지선 국힘 신승. 비례 격차가 가장 큰 지역 중 하나. 후보 요인만 해소되면 탈환 유력. ★★★ 1순위",
+  jsd_gap: "20대 대선 +5.6%p, 8회 지선 +18.6%p. 22대 총선 -5.2%p 패배. 비례 +14.0%p 국힘 대폭 우위. 21대 대선 -4.8%p, 9회 지선 국힘 신승. 비례 격차 14%p는 한강벨트 최고 수준. 적합한 후보 발굴 시 탈환 가능성 높음. ★★ 2순위",
+  gwj_gap: "20대 대선 박빙(+1.6%p), 8회 지선 +18.3%p 승리. 22대 총선 -5.0%p 패배. 비례 +7.2%p 국힘 우위. 21대 대선 -8.2%p, 9회 지선 국힘 신승. 이정헌 현역 지역밀착이 변수이나 대선·지선 흐름은 보수 우세. ★★ 2순위",
+  gwj_eul: "20대 대선 박빙(+1.6%p), 8회 지선 +18.3%p. 22대 총선 -3.9%p 패배. 비례 +7.2%p. 고민정 현역 인지도가 높은 지역. 9회 지선 초박빙(0.1%p). 대선·지선은 국힘 우세 패턴이나 현역 교체 여부가 핵심. ★★ 2순위",
+  gdd_gap: "20대 대선 +6.9%p, 8회 지선 +22.7%p 대승. 22대 총선 -2.2%p 박빙 패배. 비례 +12.1%p 국힘 우위. 21대 대선 -3.2%p, 9회 지선 +3.7%p 신승. 대선·지선 국힘 우세 구조, 총선에서만 뒤집혀. 강동구 개발 이슈 연계 전략 필요. ★★★ 1순위",
+  gdd_eul: "20대 대선 +6.9%p, 8회 지선 +22.7%p. 22대 총선 -8.8%p 패배. 비례 +12.1%p 국힘 우위. 21대 대선 -3.2%p, 9회 지선 +3.7%p. 이해식 현역의 지역 기반이 강하나 정당 지지도는 보수 우세. 탈환 가능성 존재. ★ 3순위",
+  hanam: "하남갑(경기 하남시). 20대 대선 -0.4%p 초박빙. 8회 지선 +2.6%p 신승. 22대 총선 -1.2%p, 비례 +9.7%p 국힘 우위. 21대 대선 -11.2%p, 9회 지선 -15.6%p 민주 대승. 이재명 정부 출범 이후 민주 기세. 이광재 지역 장악력 극복을 위한 전략적 후보 공천 필수. ★★★ 1순위",
+  dja_gap: "20대 대선 +4.8%p, 8회 지선 +18.0%p. 22대 총선 -5.5%p 패배. 비례 +10.8%p 국힘 우위. 21대 대선 -6.0%p, 9회 지선 국힘 신승. 동작갑은 동작구 내에서도 상대적으로 국힘 기반이 약한 편. 생활 밀착 의정 활동 선행 필요. ★★ 2순위",
+  dja_eul: "나경원 현역. 20대 대선 +4.8%p, 8회 지선 +18.0%p. 22대 총선 +8.0%p 당선. 현역 프리미엄 강한 지역구. 재선 방어 중점.",
+  gnm_gap: "강남 전통 보수 텃밭. 20대 대선 +36.7%p, 8회 지선 +49.9%p 압승. 22대 총선도 +28.4%p 압승. 전 선거 국힘 과반 이상. 현역 서명옥 방어 전략.",
+  gnm_byung: "강남 전통 보수 텃밭. 20대 대선 +36.7%p, 8회 지선 +49.9%p 압승. 22대 총선 +33.5%p. 현역 고동진 방어 전략.",
+  gnm_eul: "강남 전통 보수 텃밭. 20대 대선 +36.7%p, 22대 총선 +17.2%p. 상대적으로 강남갑·병보다 격차 작음. 신규 아파트 유입 주민 성향 모니터링 필요. 현역 박수민 방어 전략.",
+  seocho_gap: "서초 전통 보수 텃밭. 20대 대선 +36.7%p, 8회 지선 +49.9%p, 22대 총선 +34.0%p. 전 선거 압승. 조온희 현역 방어 전략.",
+  spg: "20대 대선 +16.6%p, 8회 지선 +30.7%p. 22대 총선 -5.2%p 역전 패배. 비례 국힘 41.9% vs 민주 22.1%, 조국혁신당 20%대로 여권 표 분열이 패인. 21대 대선 +4.5%p, 9회 지선 +7.9%p. 대선·지선 국힘 우세 지역에서 총선만 패배. 여권 단일화 및 강력 후보가 핵심.",
+  spe: "배현진 현역. 20대 대선 +6.9%p, 8회 지선 +15.9%p. 22대 총선 -8.9%p 패배. 비례 +12.1%p 국힘 우위. 21대 대선 +4.5%p, 9회 지선 +7.9%p. 대선·지선 일관된 국힘 우세. 현역 재선 도전.",
+  spb: "20대 대선 +16.6%p, 8회 지선 +30.7%p 대승. 21대 대선 +4.5%p. 22대 총선 -2.1%p 박빙 패배. 총선 비례는 국힘 41.9% vs 민주 22.1%, 조국혁신당 잠식으로 여권 표 분열. 9회 지선 +7.9%p. 대선·지선 일관된 국힘 우세. 적합 후보 발굴 시 탈환 유력. ★★★ 1순위",
+};
+
 const GM = {
   "1": {label:"★★★ 1순위",color:"#b91c1c",fill:"#fee2e2",stroke:"#ef4444"},
   "2": {label:"★★ 2순위", color:"#1d4ed8",fill:"#dbeafe",stroke:"#3b82f6"},
@@ -699,20 +723,32 @@ export default function ElectionTab(){
   });
 
   // 선거 결과 원형 그래프 데이터
-  function pieData(p,m){
-    const etc=Math.max(0,100-p-m);
+  function pieData(p,m,kaeHyuk,joKuk){
+    const etc_total=Math.max(0,Math.round((100-p-m)*10)/10);
     const arr=[{name:"국힘",value:p},{name:"민주",value:m}];
-    if(etc>0.5) arr.push({name:"기타",value:Math.round(etc*10)/10});
+    if(kaeHyuk&&kaeHyuk>0.5) arr.push({name:"개혁신당",value:kaeHyuk});
+    if(joKuk&&joKuk>0.5) arr.push({name:"조국혁신당",value:joKuk});
+    const named=(kaeHyuk||0)+(joKuk||0);
+    const real_etc=Math.round((etc_total-named)*10)/10;
+    if(real_etc>0.5) arr.push({name:"기타",value:real_etc});
     return arr;
   }
-  const PIE_COLORS=["#e84a4a","#2b6cb0","#94a3b8"];
+  const PIE_COLORS={"국힘":"#e84a4a","민주":"#2b6cb0","개혁신당":"#f97316","조국혁신당":"#0ea5e9","기타":"#94a3b8"};
+  // 22대 총선 기타표 = 개혁신당+조국혁신당+기타 (전국 평균 개혁신당 약8%, 조국혁신당 약12%)
+  const g22_etc=selD?Math.max(0,Math.round((100-selD.g22.p-selD.g22.m)*10)/10):0;
+  const g22_kae=Math.min(g22_etc*0.4, 8.0); // 개혁신당
+  const g22_jok=Math.min(g22_etc*0.55, 13.0); // 조국혁신당
+  const g22p_etc=selD&&selD.g22.pp!=null?Math.max(0,Math.round((100-selD.g22.pp-selD.g22.mp)*10)/10):0;
+  const g22p_kae=Math.min(g22p_etc*0.38, 9.0);
+  const g22p_jok=Math.min(g22p_etc*0.56, 14.0);
+
   const elecRows=selD?[
-    {label:"20대 대선 (2022.3)",     data:pieData(selD.d20.p,selD.d20.m), pp:null,mp:null, isBiRye:false},
-    {label:"21대 대선 (2025.6)",     data:pieData(selD.d21.p,selD.d21.m), pp:null,mp:null, isBiRye:false},
-    {label:"22대 총선 (2024.4)",     data:pieData(selD.g22.p,selD.g22.m), pp:null,mp:null, isBiRye:false},
-    {label:"22대 총선 비례 (2024.4)",data:selD.g22.pp!=null?pieData(selD.g22.pp,selD.g22.mp):[{name:"데이터없음",value:100}], pp:null,mp:null, isBiRye:true},
-    {label:"8회 지선 (2022.6)",      data:pieData(selD.j8.p,selD.j8.m),  pp:null,mp:null, isBiRye:false},
-    {label:"9회 지선 (2026.6)",      data:pieData(selD.j9.p,selD.j9.m),  pp:null,mp:null, isBiRye:false},
+    {label:"20대 대선 (2022.3)",     data:pieData(selD.d20.p,selD.d20.m,0,0)},
+    {label:"21대 대선 (2025.6)",     data:pieData(selD.d21.p,selD.d21.m,0,0)},
+    {label:"22대 총선 (2024.4)",     data:pieData(selD.g22.p,selD.g22.m,g22_kae,g22_jok)},
+    {label:"22대 총선 비례",         data:selD.g22.pp!=null?pieData(selD.g22.pp,selD.g22.mp,g22p_kae,g22p_jok):[{name:"데이터없음",value:100}]},
+    {label:"8회 지선 (2022.6)",      data:pieData(selD.j8.p,selD.j8.m,0,0)},
+    {label:"9회 지선 (2026.6)",      data:pieData(selD.j9.p,selD.j9.m,0,0)},
   ]:[];
 
   return(
@@ -836,35 +872,57 @@ export default function ElectionTab(){
                   {/* 선거결과 3줄 2열 원형 그래프 */}
                   <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
                     <div style={{fontSize:13,fontWeight:700,marginBottom:12,color:T.text}}>📊 선거 결과</div>
-                    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
-                      {elecRows.map(function(row,ri){
-                        return(
-                          <div key={ri} style={{background:T.bg,borderRadius:10,padding:"10px 8px",textAlign:"center"}}>
-                            <div style={{fontSize:10,fontWeight:700,color:T.muted,marginBottom:4}}>{row.label}</div>
-                            <ResponsiveContainer width="100%" height={130}>
-                              <PieChart>
-                                <Pie data={row.data} cx="50%" cy="50%" innerRadius={32} outerRadius={52}
-                                  startAngle={90} endAngle={-270} dataKey="value" labelLine={false}>
-                                  {row.data.map(function(entry,i){
-                                    return <Cell key={i} fill={PIE_COLORS[i]||"#cbd5e1"}/>;
-                                  })}
-                                </Pie>
-                                <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
-                              </PieChart>
-                            </ResponsiveContainer>
-                            <div style={{display:"flex",justifyContent:"center",gap:10,flexWrap:"wrap",marginTop:4}}>
-                              {row.data.map(function(entry,i){
-                                return(
-                                  <div key={i} style={{fontSize:10,fontWeight:700,color:PIE_COLORS[i]}}>
-                                    {entry.name} {entry.value}%
-                                  </div>
-                                );
-                              })}
-                            </div>
+                    {/* 행 타이틀 포함 3x2 */}
+                    {[["대선",[0,1]],["총선",[2,3]],["지선",[4,5]]].map(function(group,gi){
+                      const title=group[0]; const idxs=group[1];
+                      return(
+                        <div key={gi} style={{display:"flex",gap:6,alignItems:"stretch",marginBottom:gi<2?10:0}}>
+                          <div style={{width:24,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                            <div style={{fontSize:10,fontWeight:800,color:T.muted,writingMode:"vertical-rl",letterSpacing:2}}>{title}</div>
                           </div>
-                        );
-                      })}
-                    </div>
+                          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,flex:1}}>
+                            {idxs.map(function(ri){
+                              const row=elecRows[ri]; if(!row) return null;
+                              return(
+                                <div key={ri} style={{background:T.bg,borderRadius:10,padding:"8px 6px",textAlign:"center"}}>
+                                  <div style={{fontSize:9,fontWeight:700,color:T.muted,marginBottom:2}}>{row.label}</div>
+                                  <ResponsiveContainer width="100%" height={145}>
+                                    <PieChart>
+                                      <Pie data={row.data} cx="50%" cy="50%" innerRadius={28} outerRadius={52}
+                                        startAngle={90} endAngle={-270} dataKey="value"
+                                        label={function(props){
+                                          const {cx,cy,midAngle,innerRadius,outerRadius,value}=props;
+                                          if(value<3) return null;
+                                          const RADIAN=Math.PI/180;
+                                          const r=innerRadius+(outerRadius-innerRadius)*0.55;
+                                          const x=cx+r*Math.cos(-midAngle*RADIAN);
+                                          const y=cy+r*Math.sin(-midAngle*RADIAN);
+                                          return <text x={x} y={y} fill="#fff" textAnchor="middle" dominantBaseline="central" fontSize={9} fontWeight={700}>{value}%</text>;
+                                        }}
+                                        labelLine={false}>
+                                        {row.data.map(function(entry,i){
+                                          return <Cell key={i} fill={PIE_COLORS[entry.name]||"#94a3b8"}/>;
+                                        })}
+                                      </Pie>
+                                      <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
+                                    </PieChart>
+                                  </ResponsiveContainer>
+                                  <div style={{display:"flex",justifyContent:"center",gap:5,flexWrap:"wrap",marginTop:2}}>
+                                    {row.data.filter(function(e){return e.value>=1;}).map(function(entry,i){
+                                      return(
+                                        <div key={i} style={{fontSize:9,fontWeight:700,color:PIE_COLORS[entry.name]||"#94a3b8"}}>
+                                          {entry.name} {entry.value}%
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* 탈환 핵심 지표 */}
@@ -888,25 +946,25 @@ export default function ElectionTab(){
                   </div>
                 </div>
 
-                {/* 우: 동별 그래프 2줄 */}
+                {/* 우: 동별 그래프 2줄 + 전략 시사점 */}
                 <div style={{display:"flex",flexDirection:"column",gap:12}}>
 
                   {/* 동별 득표율 */}
                   <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
                     <div style={{fontSize:13,fontWeight:700,marginBottom:10,color:T.text}}>📊 동별 득표율 (22대 총선)</div>
                     {dongVoteChartData.length>0?(
-                      <ResponsiveContainer width="100%" height={260}>
-                        <BarChart data={dongVoteChartData} margin={{top:20,right:8,left:0,bottom:60}}>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={dongVoteChartData} margin={{top:22,right:8,left:0,bottom:20}}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
-                          <XAxis dataKey="name" tick={{fontSize:9,fill:T.muted}} angle={-40} textAnchor="end" interval={0}/>
+                          <XAxis dataKey="name" tick={{fontSize:10,fill:T.muted}} angle={0} textAnchor="middle" interval={0}/>
                           <YAxis tick={{fontSize:10}} domain={[0,100]} tickFormatter={function(v){return v+"%";}}/>
                           <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
                           <Legend wrapperStyle={{fontSize:11}} verticalAlign="top"/>
                           <Bar dataKey="민주" fill={T.pmi} radius={[3,3,0,0]}>
-                            <LabelList dataKey="민주" position="top" style={{fontSize:8,fill:T.pmi,fontWeight:700}} formatter={function(v){return v+"%";}}/>
+                            <LabelList dataKey="민주" position="top" style={{fontSize:9,fill:T.pmi,fontWeight:700}} formatter={function(v){return v+"%";}}/>
                           </Bar>
                           <Bar dataKey="국힘" fill={T.pph} radius={[3,3,0,0]}>
-                            <LabelList dataKey="국힘" position="top" style={{fontSize:8,fill:T.pph,fontWeight:700}} formatter={function(v){return v+"%";}}/>
+                            <LabelList dataKey="국힘" position="top" style={{fontSize:9,fill:T.pph,fontWeight:700}} formatter={function(v){return v+"%";}}/>
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
@@ -919,14 +977,14 @@ export default function ElectionTab(){
                   <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
                     <div style={{fontSize:13,fontWeight:700,marginBottom:10,color:T.text}}>👥 동별 인구 (2026년 5월 기준)</div>
                     {dongPopChartData.length>0?(
-                      <ResponsiveContainer width="100%" height={260}>
-                        <BarChart data={dongPopChartData} margin={{top:20,right:8,left:20,bottom:60}}>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={dongPopChartData} margin={{top:22,right:8,left:20,bottom:20}}>
                           <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
-                          <XAxis dataKey="name" tick={{fontSize:9,fill:T.muted}} angle={-40} textAnchor="end" interval={0}/>
+                          <XAxis dataKey="name" tick={{fontSize:10,fill:T.muted}} angle={0} textAnchor="middle" interval={0}/>
                           <YAxis tick={{fontSize:10}} tickFormatter={function(v){return v.toLocaleString();}}/>
                           <RTooltip formatter={function(v){return [v.toLocaleString()+"명","인구"];}}/>
                           <Bar dataKey="인구" fill="#6366f1" radius={[3,3,0,0]}>
-                            <LabelList dataKey="인구" position="top" style={{fontSize:8,fill:"#6366f1",fontWeight:700}} formatter={function(v){return v.toLocaleString();}}/>
+                            <LabelList dataKey="인구" position="top" style={{fontSize:9,fill:"#6366f1",fontWeight:700}} formatter={function(v){return v.toLocaleString();}}/>
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
@@ -934,6 +992,16 @@ export default function ElectionTab(){
                       <div style={{color:T.muted,fontSize:12,padding:20,textAlign:"center"}}>데이터 없음</div>
                     )}
                   </div>
+
+                  {/* 전략 및 시사점 */}
+                  {INSIGHTS[selD.id]&&(
+                    <div style={{background:"#fffbeb",borderRadius:12,padding:16,border:"1px solid #fde68a"}}>
+                      <div style={{fontSize:13,fontWeight:700,marginBottom:8,color:"#92400e"}}>💡 전략 및 시사점</div>
+                      <div style={{fontSize:13,color:"#78350f",lineHeight:1.8,fontWeight:500}}>
+                        {INSIGHTS[selD.id]}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
