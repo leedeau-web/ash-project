@@ -595,13 +595,13 @@ const DISTRICTS = [
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:66.3,m:32.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
   { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:500, cy:432, rx:41, ry:31, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:58.6,m:41.4,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"seocho_gap",     name:"서초갑",   sub:"조은희",  pph:true,  oseh:true,  cx:400, cy:520, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
+  { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:400, cy:520, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:66.1,m:33.9,pp:66.1,mp:33.9}, d21:{p:66.0,m:31.9}, g22:{p:65.96,m:31.92,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
   { id:"spg",            name:"송파갑",   sub:"박정훈",  pph:true,  oseh:true,  cx:660, cy:248, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:47.38,m:52.61,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
   { id:"spe",            name:"송파을",   sub:"배현진",  pph:true,  oseh:true,  cx:660, cy:340, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:44.68,m:53.55,pp:38.08,mp:26.01}, j8:{p:55.95,m:40.07,pp:55.95,mp:40.07}, d20:{p:51.7,m:44.8} },
-  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:756, cy:366, rx:41, ry:31, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
+  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:750, cy:366, rx:41, ry:31, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:48.9,m:51.0,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
 ];
 
@@ -773,17 +773,18 @@ export default function ElectionTab(){
           </div>
 
           {/* SVG 지도 — 전체 너비 */}
-          <div style={{background:"#f8fafd",padding:"0 16px"}}>
-            <svg viewBox="0 0 1100 590" style={{width:"100%",maxWidth:"1100px",display:"block"}}>
+          <div style={{background:"#f8fafd",padding:"0"}}>
+            <svg viewBox="0 0 1100 590" style={{width:"100%",display:"block"}}>
+              <ellipse cx={550} cy={305} rx={520} ry={240} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
-              <path d="M50,215 Q150,208 255,212 Q340,216 400,210 Q440,202 490,208 Q540,215 575,200 Q610,185 660,188 Q710,205 760,218 Q810,215 870,202 Q930,185 1003,168"
-                stroke="#93c5fd" strokeWidth={13} fill="none" strokeLinecap="round" opacity={0.5}/>
+              <path d="M50,255 Q150,248 245,252 Q342,257 415,250 Q452,242 490,222 Q525,205 575,184 Q623,205 673,229 Q708,238 758,222 Q806,205 856,181 Q905,165 1003,149"
+                stroke="#93c5fd" strokeWidth={18} fill="none" strokeLinecap="round" opacity={0.5}/>
               <text x={550} y={205} fill="#3b82f6" fontSize={11} fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
 
               {/* 경기도 */}
               <path d="M1020,136 L1002,144" stroke="#94a3b8" strokeWidth={1.2} strokeDasharray="4 3"/>
-              <text x={1023} y={155} fill="#64748b" fontSize={10}>경기도</text>
+              <text x={1023} y={132} fill="#64748b" fontSize={10}>경기도</text>
 
               {/* hexagon 본체 */}
               {DISTRICTS.map(function(d){
