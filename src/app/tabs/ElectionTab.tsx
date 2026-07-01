@@ -519,11 +519,11 @@ const DISTRICTS = [
     j9:{p:49.9,m:49.6,pp:45.8,mp:54.2}, d21:{p:39.1,m:48.4}, g22:{p:48.3,m:47.7,pp:34.6,mp:25.2}, j8:{p:56.6,m:40.8,pp:52.2,mp:47.8}, d20:{p:49.0,m:46.5} },
   { id:"yongsan",        name:"용산",     sub:"권영세",  pph:true,  oseh:true,  cx:318, cy:162, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:57.1,m:40.2,pp:55.3,mp:44.7}, d21:{p:47.6,m:41.1}, g22:{p:51.8,m:47.0,pp:42.3,mp:22.2}, j8:{p:64.9,m:33.3,pp:null,mp:null}, d20:{p:56.4,m:39.9} },
-  { id:"jsd_eul",        name:"중성동을", sub:"박성준",  pph:false, oseh:false, cx:450, cy:145,  rx:32, ry:24, grade:1,  note:"후보격차 -2.3%p / 비례+14.0%p",
+  { id:"jsd_eul",        name:"중성동을", sub:"박성준",  pph:false, oseh:false, cx:450, cy:82,  rx:32, ry:24, grade:1,  note:"후보격차 -2.3%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:48.5,m:50.8,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
-  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:410, cy:108, rx:32, ry:24, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
+  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:370, cy:108, rx:32, ry:24, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:47.4,m:52.6,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
-  { id:"gwj_gap",        name:"광진갑",   sub:"이정헌",  pph:false, oseh:false, cx:500, cy:108,  rx:32, ry:24, grade:2,  note:"후보격차 -5.0%p / 비례+7.2%p",
+  { id:"gwj_gap",        name:"광진갑",   sub:"이정헌",  pph:false, oseh:false, cx:615, cy:130,  rx:32, ry:24, grade:2,  note:"후보격차 -5.0%p / 비례+7.2%p",
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.5,m:52.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
   { id:"gwj_eul",        name:"광진을",   sub:"고민정",  pph:false, oseh:false, cx:550, cy:165, rx:32, ry:24, grade:2,  note:"후보격차 -3.9%p / 비례+7.2%p",
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.6,m:51.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
@@ -537,19 +537,19 @@ const DISTRICTS = [
     j9:{p:49.6,m:47.2,pp:43.4,mp:49.4}, d21:{p:40.9,m:46.9}, g22:{p:45.0,m:50.5,pp:36.4,mp:25.6}, j8:{p:58.1,m:40.1,pp:null,mp:null}, d20:{p:50.5,m:45.7} },
   { id:"dja_eul",        name:"동작을",   sub:"나경원",  pph:true,  oseh:true,  cx:340, cy:280, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:49.6,m:47.2,pp:43.4,mp:49.4}, d21:{p:40.9,m:46.9}, g22:{p:54.0,m:46.0,pp:36.4,mp:25.6}, j8:{p:58.1,m:40.1,pp:null,mp:null}, d20:{p:50.5,m:45.7} },
-  { id:"gnm_gap",        name:"강남갑",   sub:"서명옥",  pph:true,  oseh:true,  cx:420, cy:228, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_gap",        name:"강남갑",   sub:"서명옥",  pph:true,  oseh:true,  cx:440, cy:228, rx:32, ry:24, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:64.2,m:35.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
   { id:"gnm_byung",      name:"강남병",   sub:"고동진",  pph:true,  oseh:true,  cx:470, cy:345, rx:32, ry:24, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:66.3,m:32.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:470, cy:288, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:470, cy:285, rx:32, ry:24, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:58.6,m:41.4,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:370, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:350, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:66.1,m:33.9,pp:66.1,mp:33.9}, d21:{p:66.0,m:31.9}, g22:{p:65.96,m:31.92,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"spg",            name:"송파갑",   sub:"박정훈",  pph:true,  oseh:true,  cx:560, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"spg",            name:"송파갑",   sub:"박정훈",  pph:true,  oseh:true,  cx:590, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:47.38,m:52.61,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
-  { id:"spe",            name:"송파을",   sub:"배현진",  pph:true,  oseh:true,  cx:510, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"spe",            name:"송파을",   sub:"배현진",  pph:true,  oseh:true,  cx:520, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:44.68,m:53.55,pp:38.08,mp:26.01}, j8:{p:55.95,m:40.07,pp:55.95,mp:40.07}, d20:{p:51.7,m:44.8} },
-  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:630, cy:228, rx:32, ry:24, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
+  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:660, cy:285, rx:32, ry:24, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:48.9,m:51.0,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
 ];
 
@@ -689,9 +689,9 @@ export default function ElectionTab(){
               <ellipse cx={460} cy={255} rx={440} ry={205} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
-              <path d="M40,188 Q120,182 200,186 Q280,190 340,185 Q370,178 400,162 Q430,148 470,130 Q510,148 550,168 Q580,175 620,162 Q660,148 700,128 Q740,115 820,102"
+              <path d="M40,208 Q120,202 200,206 Q280,210 340,205 Q370,198 400,182 Q430,168 470,150 Q510,168 550,188 Q580,195 620,182 Q660,168 700,148 Q740,135 820,122"
                 stroke="#93c5fd" strokeWidth={14} fill="none" strokeLinecap="round" opacity={0.5}/>
-              <text x={450} y={148} fill="#3b82f6" fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
+              <text x={450} y={168} fill="#3b82f6" fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
 
               {/* 경기도 */}
               <path d="M830,104 L812,112" stroke="#94a3b8" strokeWidth={1.2} strokeDasharray="4 3"/>
