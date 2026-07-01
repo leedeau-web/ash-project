@@ -689,9 +689,9 @@ export default function ElectionTab(){
               <ellipse cx={460} cy={255} rx={440} ry={205} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
-              <path d="M40,135 Q120,128 200,132 Q280,136 340,155 Q370,162 400,150 Q430,138 470,120 Q510,138 550,158 Q580,165 620,152 Q660,138 700,118 Q740,108 820,98"
+              <path d="M40,188 Q120,182 200,186 Q280,190 340,185 Q370,178 400,162 Q430,148 470,130 Q510,148 550,168 Q580,175 620,162 Q660,148 700,128 Q740,115 820,102"
                 stroke="#93c5fd" strokeWidth={14} fill="none" strokeLinecap="round" opacity={0.5}/>
-              <text x={450} y={125} fill="#3b82f6" fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
+              <text x={450} y={148} fill="#3b82f6" fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
 
               {/* 경기도 */}
               <path d="M830,104 L812,112" stroke="#94a3b8" strokeWidth={1.2} strokeDasharray="4 3"/>
