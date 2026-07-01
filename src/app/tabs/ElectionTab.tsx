@@ -561,47 +561,47 @@ const DONG_DATA = {
 };
 
 const DISTRICTS = [
-  { id:"yangcheon_gap",  name:"양천갑",   sub:"황희",    pph:false, oseh:false, cx:100, cy:228, rx:32, ry:24, grade:1,  note:"후보격차 -1.6%p / 비례+11.8%p",
+  { id:"yangcheon_gap",  name:"양천갑",   sub:"황희",    pph:false, oseh:false, cx:100, cy:278, rx:41, ry:31, grade:1,  note:"후보격차 -1.6%p / 비례+11.8%p",
     j9:{p:49.2,m:48.5,pp:47.9,mp:52.1}, d21:{p:41.3,m:48.3}, g22:{p:48.2,m:49.8,pp:37.0,mp:25.2}, j8:{p:58.8,m:39.7,pp:55.3,mp:44.7}, d20:{p:50.1,m:46.4} },
-  { id:"ydeungpo_gap",   name:"영등포갑", sub:"채현일",  pph:false, oseh:false, cx:170, cy:228, rx:32, ry:24, grade:3,  note:"후보격차 -12.8%p / 비례+10.9%p",
+  { id:"ydeungpo_gap",   name:"영등포갑", sub:"채현일",  pph:false, oseh:false, cx:186, cy:278, rx:41, ry:31, grade:3,  note:"후보격차 -12.8%p / 비례+10.9%p",
     j9:{p:50.5,m:46.7,pp:49.0,mp:51.0}, d21:{p:41.5,m:45.9}, g22:{p:41.7,m:54.5,pp:37.1,mp:26.2}, j8:{p:60.1,m:38.2,pp:null,mp:null}, d20:{p:51.6,m:44.6} },
-  { id:"ydeungpo_eul",   name:"영등포을", sub:"김민석",  pph:false, oseh:false, cx:240, cy:228, rx:32, ry:24, grade:1,  note:"후보격차 -1.2%p / 비례+10.9%p",
+  { id:"ydeungpo_eul",   name:"영등포을", sub:"김민석",  pph:false, oseh:false, cx:272, cy:278, rx:41, ry:31, grade:1,  note:"후보격차 -1.2%p / 비례+10.9%p",
     j9:{p:50.5,m:46.7,pp:49.0,mp:51.0}, d21:{p:41.5,m:45.9}, g22:{p:49.0,m:50.2,pp:37.1,mp:26.2}, j8:{p:60.1,m:38.2,pp:null,mp:null}, d20:{p:51.6,m:44.6} },
-  { id:"mapo_gap",       name:"마포갑",   sub:"조정훈",  pph:true,  oseh:false, cx:240, cy:162, rx:32, ry:24, grade:0,  note:"22대 국힘 조정훈 당선",
+  { id:"mapo_gap",       name:"마포갑",   sub:"조정훈",  pph:true,  oseh:false, cx:280, cy:190, rx:41, ry:31, grade:0,  note:"22대 국힘 조정훈 당선",
     j9:{p:49.9,m:49.6,pp:45.8,mp:54.2}, d21:{p:39.1,m:48.4}, g22:{p:48.3,m:47.7,pp:34.6,mp:25.2}, j8:{p:56.6,m:40.8,pp:52.2,mp:47.8}, d20:{p:49.0,m:46.5} },
-  { id:"yongsan",        name:"용산",     sub:"권영세",  pph:true,  oseh:true,  cx:318, cy:162, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"yongsan",        name:"용산",     sub:"권영세",  pph:true,  oseh:true,  cx:376, cy:190, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:57.1,m:40.2,pp:55.3,mp:44.7}, d21:{p:47.6,m:41.1}, g22:{p:51.8,m:47.0,pp:42.3,mp:22.2}, j8:{p:64.9,m:33.3,pp:null,mp:null}, d20:{p:56.4,m:39.9} },
-  { id:"jsd_eul",        name:"중성동을", sub:"박성준",  pph:false, oseh:false, cx:380, cy:148,  rx:32, ry:24, grade:1,  note:"후보격차 -2.3%p / 비례+14.0%p",
+  { id:"jsd_eul",        name:"중성동을", sub:"박성준",  pph:false, oseh:false, cx:462, cy:100,  rx:32, ry:24, grade:1,  note:"후보격차 -2.3%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:48.5,m:50.8,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
-  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:450, cy:138, rx:32, ry:24, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
+  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:554, cy:162, rx:41, ry:31, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:47.4,m:52.6,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
-  { id:"gwj_gap",        name:"광진갑",   sub:"이정헌",  pph:false, oseh:false, cx:615, cy:130,  rx:32, ry:24, grade:2,  note:"후보격차 -5.0%p / 비례+7.2%p",
+  { id:"gwj_gap",        name:"광진갑",   sub:"이정헌",  pph:false, oseh:false, cx:610, cy:100,  rx:32, ry:24, grade:2,  note:"후보격차 -5.0%p / 비례+7.2%p",
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.5,m:52.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
-  { id:"gwj_eul",        name:"광진을",   sub:"고민정",  pph:false, oseh:false, cx:550, cy:155, rx:32, ry:24, grade:2,  note:"후보격차 -3.9%p / 비례+7.2%p",
+  { id:"gwj_eul",        name:"광진을",   sub:"고민정",  pph:false, oseh:false, cx:676, cy:178, rx:41, ry:31, grade:2,  note:"후보격차 -3.9%p / 비례+7.2%p",
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.6,m:51.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
-  { id:"gdd_gap",        name:"강동갑",   sub:"진선미",  pph:false, oseh:false, cx:700, cy:185, rx:32, ry:24, grade:1,  note:"후보격차 -2.2%p / 비례+12.1%p",
+  { id:"gdd_gap",        name:"강동갑",   sub:"진선미",  pph:false, oseh:false, cx:876, cy:196, rx:41, ry:31, grade:1,  note:"후보격차 -2.2%p / 비례+12.1%p",
     j9:{p:50.6,m:46.9,pp:49.9,mp:50.1}, d21:{p:43.0,m:46.2}, g22:{p:47.9,m:50.1,pp:38.1,mp:26.0}, j8:{p:60.6,m:37.9,pp:56.0,mp:40.1}, d20:{p:51.7,m:44.8} },
-  { id:"gdd_eul",        name:"강동을",   sub:"이해식",  pph:false, oseh:false, cx:665, cy:218, rx:32, ry:24, grade:3,  note:"후보격차 -8.8%p / 비례+12.1%p",
+  { id:"gdd_eul",        name:"강동을",   sub:"이해식",  pph:false, oseh:false, cx:852, cy:300, rx:41, ry:31, grade:3,  note:"후보격차 -8.8%p / 비례+12.1%p",
     j9:{p:50.6,m:46.9,pp:49.9,mp:50.1}, d21:{p:43.0,m:46.2}, g22:{p:44.7,m:53.5,pp:38.1,mp:26.0}, j8:{p:60.6,m:37.9,pp:56.0,mp:40.1}, d20:{p:51.7,m:44.8} },
-  { id:"hanam",          name:"하남갑",   sub:"이광재",  pph:false, oseh:false, cx:780, cy:215, rx:38, ry:28, grade:1,  note:"후보격차 -1.2%p / 비례+9.7%p",
+  { id:"hanam",          name:"하남갑",   sub:"이광재",  pph:false, oseh:false, cx:972, cy:260, rx:49, ry:36, grade:1,  note:"후보격차 -1.2%p / 비례+9.7%p",
     j9:{p:39.4,m:55.0,pp:45.5,mp:54.5}, d21:{p:39.5,m:50.7}, g22:{p:49.4,m:50.6,pp:35.7,mp:26.0}, j8:{p:50.5,m:47.9,pp:52.9,mp:47.1}, d20:{p:48.3,m:48.7} },
-  { id:"dja_gap",        name:"동작갑",   sub:"김병기",  pph:false, oseh:false, cx:270, cy:280, rx:32, ry:24, grade:2,  note:"후보격차 -5.5%p / 비례+10.8%p",
+  { id:"dja_gap",        name:"동작갑",   sub:"김병기",  pph:false, oseh:false, cx:358, cy:340, rx:41, ry:31, grade:2,  note:"후보격차 -5.5%p / 비례+10.8%p",
     j9:{p:49.6,m:47.2,pp:43.4,mp:49.4}, d21:{p:40.9,m:46.9}, g22:{p:45.0,m:50.5,pp:36.4,mp:25.6}, j8:{p:58.1,m:40.1,pp:null,mp:null}, d20:{p:50.5,m:45.7} },
-  { id:"dja_eul",        name:"동작을",   sub:"나경원",  pph:true,  oseh:true,  cx:340, cy:280, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"dja_eul",        name:"동작을",   sub:"나경원",  pph:true,  oseh:true,  cx:358, cy:432, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:49.6,m:47.2,pp:43.4,mp:49.4}, d21:{p:40.9,m:46.9}, g22:{p:54.0,m:46.0,pp:36.4,mp:25.6}, j8:{p:58.1,m:40.1,pp:null,mp:null}, d20:{p:50.5,m:45.7} },
-  { id:"gnm_gap",        name:"강남갑",   sub:"서명옥",  pph:true,  oseh:true,  cx:440, cy:208, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_gap",        name:"강남갑",   sub:"서명옥",  pph:true,  oseh:true,  cx:500, cy:248, rx:41, ry:31, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:64.2,m:35.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"gnm_byung",      name:"강남병",   sub:"고동진",  pph:true,  oseh:true,  cx:470, cy:258, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_byung",      name:"강남병",   sub:"고동진",  pph:true,  oseh:true,  cx:500, cy:340, rx:41, ry:31, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:66.3,m:32.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:520, cy:278, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:500, cy:432, rx:41, ry:31, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:58.6,m:41.4,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:360, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:400, cy:520, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:66.1,m:33.9,pp:66.1,mp:33.9}, d21:{p:66.0,m:31.9}, g22:{p:65.96,m:31.92,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"spg",            name:"송파갑",   sub:"박정훈",  pph:true,  oseh:true,  cx:590, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"spg",            name:"송파갑",   sub:"박정훈",  pph:true,  oseh:true,  cx:660, cy:248, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:47.38,m:52.61,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
-  { id:"spe",            name:"송파을",   sub:"배현진",  pph:true,  oseh:true,  cx:520, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
+  { id:"spe",            name:"송파을",   sub:"배현진",  pph:true,  oseh:true,  cx:660, cy:340, rx:41, ry:31, grade:-1, note:"22대 국힘 현역",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:44.68,m:53.55,pp:38.08,mp:26.01}, j8:{p:55.95,m:40.07,pp:55.95,mp:40.07}, d20:{p:51.7,m:44.8} },
-  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:620, cy:278, rx:32, ry:24, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
+  { id:"spb",            name:"송파병",   sub:"남인순",  pph:false, oseh:false, cx:750, cy:366, rx:41, ry:31, grade:1,  note:"후보격차 -2.1%p / 비례+19.8%p ★",
     j9:{p:54.8,m:46.9,pp:54.0,mp:43.0}, d21:{p:46.6,m:42.1}, g22:{p:48.9,m:51.0,pp:41.9,mp:22.1}, j8:{p:64.7,m:34.0,pp:60.9,mp:37.7}, d20:{p:56.8,m:40.2} },
 ];
 
@@ -752,7 +752,7 @@ export default function ElectionTab(){
   ]:[];
 
   return(
-    <div style={{background:T.bg,minHeight:"100vh",fontFamily:"'Apple SD Gothic Neo','Pretendard',sans-serif",color:T.text,width:"100vw",marginLeft:"calc(50% - 50vw)"}}>
+    <div style={{background:T.bg,minHeight:"100vh",fontFamily:"'Apple SD Gothic Neo','Pretendard',sans-serif",color:T.text,width:"calc(100vw - 40px)",marginLeft:"calc(50% - 50vw + 20px)"}}>
       {/* 탭 바 */}
       <div style={{background:T.surface,borderBottom:"1px solid "+T.border,padding:"10px 20px",display:"flex",gap:4}}>
         {[["map","🗺️ 한강벨트 분석"],["ash","📡 23ASH"]].map(function(pair){
@@ -774,17 +774,17 @@ export default function ElectionTab(){
 
           {/* SVG 지도 — 전체 너비 */}
           <div style={{background:"#f8fafd",padding:"8px 16px"}}>
-            <svg viewBox="0 0 900 430" style={{width:"100%",display:"block",maxHeight:"50vh"}}>
-              <ellipse cx={460} cy={255} rx={440} ry={205} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
+            <svg viewBox="0 0 1100 590" style={{width:"100%",display:"block",maxHeight:"52vh"}}>
+              <ellipse cx={550} cy={305} rx={520} ry={240} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
-              <path d="M40,208 Q120,202 200,206 Q280,210 340,205 Q370,198 400,182 Q430,168 470,150 Q510,168 550,188 Q580,195 620,182 Q660,168 700,148 Q740,135 820,122"
-                stroke="#93c5fd" strokeWidth={14} fill="none" strokeLinecap="round" opacity={0.5}/>
-              <text x={450} y={168} fill="#3b82f6" fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
+              <path d="M50,255 Q150,248 245,252 Q342,257 415,250 Q452,242 490,222 Q525,205 575,184 Q623,205 673,229 Q708,238 758,222 Q806,205 856,181 Q905,165 1003,149"
+                stroke="#93c5fd" strokeWidth={18} fill="none" strokeLinecap="round" opacity={0.5}/>
+              <text x={550} y={205} fill="#3b82f6" fontSize={11} fontSize={9} textAnchor="middle" opacity={0.7}>한 강</text>
 
               {/* 경기도 */}
-              <path d="M830,104 L812,112" stroke="#94a3b8" strokeWidth={1.2} strokeDasharray="4 3"/>
-              <text x={832} y={100} fill="#64748b" fontSize={9}>경기도</text>
+              <path d="M1020,136 L1002,144" stroke="#94a3b8" strokeWidth={1.2} strokeDasharray="4 3"/>
+              <text x={1023} y={132} fill="#64748b" fontSize={10}>경기도</text>
 
               {/* hexagon 본체 */}
               {DISTRICTS.map(function(d){
