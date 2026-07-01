@@ -2,7 +2,7 @@
 import { useState } from "react";
 import {
   PieChart, Pie, Cell, Tooltip as RTooltip, ResponsiveContainer,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, LabelList,
   LineChart, Line, ReferenceLine, ReferenceArea,
 } from "recharts";
 
@@ -573,7 +573,7 @@ const DISTRICTS = [
     j9:{p:57.1,m:40.2,pp:55.3,mp:44.7}, d21:{p:47.6,m:41.1}, g22:{p:51.8,m:47.0,pp:42.3,mp:22.2}, j8:{p:64.9,m:33.3,pp:null,mp:null}, d20:{p:56.4,m:39.9} },
   { id:"jsd_eul",        name:"중성동을", sub:"박성준",  pph:false, oseh:false, cx:380, cy:148,  rx:32, ry:24, grade:1,  note:"후보격차 -2.3%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:48.5,m:50.8,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
-  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:450, cy:148, rx:32, ry:24, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
+  { id:"jsd_gap",        name:"중성동갑", sub:"전현희",  pph:false, oseh:false, cx:450, cy:138, rx:32, ry:24, grade:2,  note:"후보격차 -5.2%p / 비례+14.0%p",
     j9:{p:49.6,m:47.9,pp:48.6,mp:51.4}, d21:{p:42.0,m:46.8}, g22:{p:47.4,m:52.6,pp:38.8,mp:24.8}, j8:{p:58.5,m:39.9,pp:54.5,mp:45.5}, d20:{p:51.0,m:45.4} },
   { id:"gwj_gap",        name:"광진갑",   sub:"이정헌",  pph:false, oseh:false, cx:615, cy:130,  rx:32, ry:24, grade:2,  note:"후보격차 -5.0%p / 비례+7.2%p",
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.5,m:52.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
@@ -581,7 +581,7 @@ const DISTRICTS = [
     j9:{p:48.7,m:48.6,pp:47.3,mp:52.6}, d21:{p:39.9,m:48.1}, g22:{p:47.6,m:51.5,pp:35.8,mp:28.6}, j8:{p:58.3,m:40.0,pp:53.6,mp:46.4}, d20:{p:48.8,m:47.2} },
   { id:"gdd_gap",        name:"강동갑",   sub:"진선미",  pph:false, oseh:false, cx:700, cy:185, rx:32, ry:24, grade:1,  note:"후보격차 -2.2%p / 비례+12.1%p",
     j9:{p:50.6,m:46.9,pp:49.9,mp:50.1}, d21:{p:43.0,m:46.2}, g22:{p:47.9,m:50.1,pp:38.1,mp:26.0}, j8:{p:60.6,m:37.9,pp:56.0,mp:40.1}, d20:{p:51.7,m:44.8} },
-  { id:"gdd_eul",        name:"강동을",   sub:"이해식",  pph:false, oseh:false, cx:670, cy:218, rx:32, ry:24, grade:3,  note:"후보격차 -8.8%p / 비례+12.1%p",
+  { id:"gdd_eul",        name:"강동을",   sub:"이해식",  pph:false, oseh:false, cx:665, cy:218, rx:32, ry:24, grade:3,  note:"후보격차 -8.8%p / 비례+12.1%p",
     j9:{p:50.6,m:46.9,pp:49.9,mp:50.1}, d21:{p:43.0,m:46.2}, g22:{p:44.7,m:53.5,pp:38.1,mp:26.0}, j8:{p:60.6,m:37.9,pp:56.0,mp:40.1}, d20:{p:51.7,m:44.8} },
   { id:"hanam",          name:"하남갑",   sub:"이광재",  pph:false, oseh:false, cx:780, cy:215, rx:38, ry:28, grade:1,  note:"후보격차 -1.2%p / 비례+9.7%p",
     j9:{p:39.4,m:55.0,pp:45.5,mp:54.5}, d21:{p:39.5,m:50.7}, g22:{p:49.4,m:50.6,pp:35.7,mp:26.0}, j8:{p:50.5,m:47.9,pp:52.9,mp:47.1}, d20:{p:48.3,m:48.7} },
@@ -593,7 +593,7 @@ const DISTRICTS = [
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:64.2,m:35.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
   { id:"gnm_byung",      name:"강남병",   sub:"고동진",  pph:true,  oseh:true,  cx:470, cy:258, rx:32, ry:24, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:66.3,m:32.8,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
-  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:510, cy:278, rx:32, ry:24, grade:-1, note:"강남 텃밭",
+  { id:"gnm_eul",        name:"강남을",   sub:"박수민",  pph:true,  oseh:true,  cx:520, cy:278, rx:32, ry:24, grade:-1, note:"강남 텃밭",
     j9:{p:66.0,m:31.9,pp:66.1,mp:33.9}, d21:{p:56.6,m:32.2}, g22:{p:58.6,m:41.4,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
   { id:"seocho_gap",     name:"서초갑",   sub:"조온희",  pph:true,  oseh:true,  cx:360, cy:228, rx:32, ry:24, grade:-1, note:"22대 국힘 현역",
     j9:{p:66.1,m:33.9,pp:66.1,mp:33.9}, d21:{p:66.0,m:31.9}, g22:{p:65.96,m:31.92,pp:50.3,mp:14.9}, j8:{p:74.4,m:24.5,pp:72.2,mp:27.8}, d20:{p:67.0,m:30.3} },
@@ -695,7 +695,7 @@ export default function ElectionTab(){
   // 동별 인구 BarChart 데이터 (득표율과 동일 순서)
   const dongPopChartData=sortedDongs.filter(function(d){return dd.dongPop&&dd.dongPop[d];}).map(function(dong){
     const p=dd.dongPop[dong];
-    return {name:dong,인구:Math.round(p.pop/1000*10)/10};
+    return {name:dong,인구:p.pop};
   });
 
   // 선거 결과 원형 그래프 데이터
@@ -707,11 +707,12 @@ export default function ElectionTab(){
   }
   const PIE_COLORS=["#e84a4a","#2b6cb0","#94a3b8"];
   const elecRows=selD?[
-    {label:"20대 대선 (2022.3)",  data:pieData(selD.d20.p,selD.d20.m), pp:null,mp:null},
-    {label:"8회 지선 (2022.6)",   data:pieData(selD.j8.p,selD.j8.m),  pp:selD.j8.pp,mp:selD.j8.mp},
-    {label:"22대 총선 (2024.4)",  data:pieData(selD.g22.p,selD.g22.m),pp:selD.g22.pp,mp:selD.g22.mp},
-    {label:"21대 대선 (2025.6)",  data:pieData(selD.d21.p,selD.d21.m),pp:null,mp:null},
-    {label:"9회 지선 (2026.6)",   data:pieData(selD.j9.p,selD.j9.m),  pp:selD.j9.pp,mp:selD.j9.mp},
+    {label:"20대 대선 (2022.3)",     data:pieData(selD.d20.p,selD.d20.m), pp:null,mp:null, isBiRye:false},
+    {label:"21대 대선 (2025.6)",     data:pieData(selD.d21.p,selD.d21.m), pp:null,mp:null, isBiRye:false},
+    {label:"22대 총선 (2024.4)",     data:pieData(selD.g22.p,selD.g22.m), pp:null,mp:null, isBiRye:false},
+    {label:"22대 총선 비례 (2024.4)",data:selD.g22.pp!=null?pieData(selD.g22.pp,selD.g22.mp):[{name:"데이터없음",value:100}], pp:null,mp:null, isBiRye:true},
+    {label:"8회 지선 (2022.6)",      data:pieData(selD.j8.p,selD.j8.m),  pp:null,mp:null, isBiRye:false},
+    {label:"9회 지선 (2026.6)",      data:pieData(selD.j9.p,selD.j9.m),  pp:null,mp:null, isBiRye:false},
   ]:[];
 
   return(
@@ -737,7 +738,7 @@ export default function ElectionTab(){
 
           {/* SVG 지도 — 전체 너비 */}
           <div style={{background:"#f8fafd",padding:"8px 16px"}}>
-            <svg viewBox="0 0 900 430" style={{width:"100%",display:"block"}}>
+            <svg viewBox="0 0 900 430" style={{width:"100%",display:"block",maxHeight:"50vh"}}>
               <ellipse cx={460} cy={255} rx={440} ry={205} fill="#eef2ff" stroke="#c7d2fe" strokeWidth={1.5}/>
 
               {/* 한강 */}
@@ -826,104 +827,113 @@ export default function ElectionTab(){
                 </button>
               </div>
 
-              {/* 메인 그리드: 선거결과(원형) | 탈환지표 | 동별그래프 */}
-              <div style={{display:"grid",gridTemplateColumns:"3fr 1fr 2fr 2fr",gap:16,alignItems:"start"}}>
+              {/* 새 레이아웃: 좌(선거결과+탈환지표) | 우(동별그래프) */}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,alignItems:"start"}}>
 
-                {/* 1. 선거 결과 원형 그래프 5개 — 가로로 */}
-                <div style={{background:T.surface,borderRadius:12,padding:14,border:"1px solid "+T.border}}>
-                  <div style={{fontSize:12,fontWeight:700,marginBottom:10,color:T.text}}>📊 선거 결과</div>
-                  <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"space-between"}}>
-                    {elecRows.map(function(row,ri){
-                      return(
-                        <div key={ri} style={{flex:"1 1 80px",minWidth:75}}>
-                          <div style={{fontSize:9,fontWeight:700,color:T.muted,textAlign:"center",marginBottom:2}}>{row.label}</div>
-                          <ResponsiveContainer width="100%" height={110}>
-                            <PieChart>
-                              <Pie data={row.data} cx="50%" cy="50%" innerRadius={24} outerRadius={40}
-                                startAngle={90} endAngle={-270} dataKey="value" labelLine={false}>
-                                {row.data.map(function(entry,i){
-                                  return <Cell key={i} fill={PIE_COLORS[i]||"#cbd5e1"}/>;
-                                })}
-                              </Pie>
-                              <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
-                            </PieChart>
-                          </ResponsiveContainer>
-                          <div style={{display:"flex",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
-                            {row.data.map(function(entry,i){
-                              return(
-                                <div key={i} style={{fontSize:9,fontWeight:700,color:PIE_COLORS[i]}}>
-                                  {entry.name} {entry.value}%
-                                </div>
-                              );
-                            })}
-                          </div>
-                          {row.pp!=null&&(
-                            <div style={{fontSize:8,color:T.muted,textAlign:"center",marginTop:3}}>
-                              비례 국힘{row.pp}% / 민주{row.mp}%
+                {/* 좌: 선거결과 3x2 + 탈환 핵심지표 */}
+                <div style={{display:"flex",flexDirection:"column",gap:12}}>
+
+                  {/* 선거결과 3줄 2열 원형 그래프 */}
+                  <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
+                    <div style={{fontSize:13,fontWeight:700,marginBottom:12,color:T.text}}>📊 선거 결과</div>
+                    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+                      {elecRows.map(function(row,ri){
+                        return(
+                          <div key={ri} style={{background:T.bg,borderRadius:10,padding:"10px 8px",textAlign:"center"}}>
+                            <div style={{fontSize:10,fontWeight:700,color:T.muted,marginBottom:4}}>{row.label}</div>
+                            <ResponsiveContainer width="100%" height={130}>
+                              <PieChart>
+                                <Pie data={row.data} cx="50%" cy="50%" innerRadius={32} outerRadius={52}
+                                  startAngle={90} endAngle={-270} dataKey="value" labelLine={false}>
+                                  {row.data.map(function(entry,i){
+                                    return <Cell key={i} fill={PIE_COLORS[i]||"#cbd5e1"}/>;
+                                  })}
+                                </Pie>
+                                <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
+                              </PieChart>
+                            </ResponsiveContainer>
+                            <div style={{display:"flex",justifyContent:"center",gap:10,flexWrap:"wrap",marginTop:4}}>
+                              {row.data.map(function(entry,i){
+                                return(
+                                  <div key={i} style={{fontSize:10,fontWeight:700,color:PIE_COLORS[i]}}>
+                                    {entry.name} {entry.value}%
+                                  </div>
+                                );
+                              })}
                             </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 탈환 핵심 지표 */}
+                  <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
+                    <div style={{fontSize:13,fontWeight:700,marginBottom:10,color:T.text}}>🎯 탈환 핵심 지표</div>
+                    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                      {[
+                        {lb:"22대 후보 격차",v:(selD.g22.p-selD.g22.m).toFixed(1)+"%p",c:(selD.g22.p-selD.g22.m)>0?"#16a34a":"#dc2626"},
+                        {lb:"22대 비례 격차",v:selD.g22.pp!=null?("+"+(selD.g22.pp-selD.g22.mp).toFixed(1)+"%p"):"N/A",c:"#16a34a"},
+                        {lb:"9회 지선 격차",v:(selD.j9.p-selD.j9.m).toFixed(1)+"%p",c:(selD.j9.p-selD.j9.m)>0?"#16a34a":"#dc2626"},
+                        {lb:"21대 대선 격차",v:(selD.d21.p-selD.d21.m).toFixed(1)+"%p",c:(selD.d21.p-selD.d21.m)>0?"#16a34a":"#dc2626"},
+                      ].map(function(m,i){
+                        return(
+                          <div key={i} style={{background:T.bg,borderRadius:8,padding:"10px 12px",border:"1px solid "+T.border}}>
+                            <div style={{fontSize:10,color:T.muted,marginBottom:3}}>{m.lb}</div>
+                            <div style={{fontSize:22,fontWeight:800,color:m.c}}>{m.v}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 
-                {/* 2. 탈환 핵심 지표 */}
-                <div style={{background:T.surface,borderRadius:12,padding:14,border:"1px solid "+T.border}}>
-                  <div style={{fontSize:12,fontWeight:700,marginBottom:10,color:T.text}}>🎯 탈환 핵심 지표</div>
-                  <div style={{display:"flex",flexDirection:"column",gap:8}}>
-                    {[
-                      {lb:"22대 후보 격차",v:(selD.g22.p-selD.g22.m).toFixed(1)+"%p",c:(selD.g22.p-selD.g22.m)>0?"#16a34a":"#dc2626"},
-                      {lb:"22대 비례 격차",v:selD.g22.pp!=null?("+"+(selD.g22.pp-selD.g22.mp).toFixed(1)+"%p"):"N/A",c:"#16a34a"},
-                      {lb:"9회 지선 격차",v:(selD.j9.p-selD.j9.m).toFixed(1)+"%p",c:(selD.j9.p-selD.j9.m)>0?"#16a34a":"#dc2626"},
-                      {lb:"21대 대선 격차",v:(selD.d21.p-selD.d21.m).toFixed(1)+"%p",c:(selD.d21.p-selD.d21.m)>0?"#16a34a":"#dc2626"},
-                    ].map(function(m,i){
-                      return(
-                        <div key={i} style={{background:T.bg,borderRadius:8,padding:"8px 10px",border:"1px solid "+T.border}}>
-                          <div style={{fontSize:10,color:T.muted,marginBottom:2}}>{m.lb}</div>
-                          <div style={{fontSize:20,fontWeight:800,color:m.c}}>{m.v}</div>
-                        </div>
-                      );
-                    })}
+                {/* 우: 동별 그래프 2줄 */}
+                <div style={{display:"flex",flexDirection:"column",gap:12}}>
+
+                  {/* 동별 득표율 */}
+                  <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
+                    <div style={{fontSize:13,fontWeight:700,marginBottom:10,color:T.text}}>📊 동별 득표율 (22대 총선)</div>
+                    {dongVoteChartData.length>0?(
+                      <ResponsiveContainer width="100%" height={260}>
+                        <BarChart data={dongVoteChartData} margin={{top:20,right:8,left:0,bottom:60}}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
+                          <XAxis dataKey="name" tick={{fontSize:9,fill:T.muted}} angle={-40} textAnchor="end" interval={0}/>
+                          <YAxis tick={{fontSize:10}} domain={[0,100]} tickFormatter={function(v){return v+"%";}}/>
+                          <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
+                          <Legend wrapperStyle={{fontSize:11}} verticalAlign="top"/>
+                          <Bar dataKey="민주" fill={T.pmi} radius={[3,3,0,0]}>
+                            <LabelList dataKey="민주" position="top" style={{fontSize:8,fill:T.pmi,fontWeight:700}} formatter={function(v){return v+"%";}}/>
+                          </Bar>
+                          <Bar dataKey="국힘" fill={T.pph} radius={[3,3,0,0]}>
+                            <LabelList dataKey="국힘" position="top" style={{fontSize:8,fill:T.pph,fontWeight:700}} formatter={function(v){return v+"%";}}/>
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    ):(
+                      <div style={{color:T.muted,fontSize:12,padding:20,textAlign:"center"}}>데이터 없음</div>
+                    )}
                   </div>
-                </div>
 
-                {/* 3. 동별 득표율 세로 막대 */}
-                <div style={{background:T.surface,borderRadius:12,padding:14,border:"1px solid "+T.border}}>
-                  <div style={{fontSize:12,fontWeight:700,marginBottom:10,color:T.text}}>📊 동별 득표율 (22대 총선)</div>
-                  {dongVoteChartData.length>0?(
-                    <ResponsiveContainer width="100%" height={220}>
-                      <BarChart data={dongVoteChartData} margin={{top:4,right:4,left:-20,bottom:50}}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
-                        <XAxis dataKey="name" tick={{fontSize:8,fill:T.muted}} angle={-45} textAnchor="end" interval={0}/>
-                        <YAxis tick={{fontSize:9}} domain={[0,100]} tickFormatter={function(v){return v+"%";}}/>
-                        <RTooltip formatter={function(v,n){return [v+"%",n];}}/>
-                        <Legend wrapperStyle={{fontSize:10}} verticalAlign="top"/>
-                        <Bar dataKey="민주" fill={T.pmi} radius={[2,2,0,0]}/>
-                        <Bar dataKey="국힘" fill={T.pph} radius={[2,2,0,0]}/>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ):(
-                    <div style={{color:T.muted,fontSize:12,padding:20,textAlign:"center"}}>데이터 없음</div>
-                  )}
-                </div>
-
-                {/* 4. 동별 인구 세로 막대 (득표율과 동일 순서) */}
-                <div style={{background:T.surface,borderRadius:12,padding:14,border:"1px solid "+T.border}}>
-                  <div style={{fontSize:12,fontWeight:700,marginBottom:10,color:T.text}}>👥 동별 인구 (26.5. 기준, 천명)</div>
-                  {dongPopChartData.length>0?(
-                    <ResponsiveContainer width="100%" height={220}>
-                      <BarChart data={dongPopChartData} margin={{top:4,right:4,left:-20,bottom:50}}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
-                        <XAxis dataKey="name" tick={{fontSize:8,fill:T.muted}} angle={-45} textAnchor="end" interval={0}/>
-                        <YAxis tick={{fontSize:9}} tickFormatter={function(v){return v+"k";}}/>
-                        <RTooltip formatter={function(v){return [v+"천명","인구"];}}/>
-                        <Bar dataKey="인구" fill="#6366f1" radius={[2,2,0,0]}/>
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ):(
-                    <div style={{color:T.muted,fontSize:12,padding:20,textAlign:"center"}}>데이터 없음</div>
-                  )}
+                  {/* 동별 인구 */}
+                  <div style={{background:T.surface,borderRadius:12,padding:16,border:"1px solid "+T.border}}>
+                    <div style={{fontSize:13,fontWeight:700,marginBottom:10,color:T.text}}>👥 동별 인구 (2026년 5월 기준)</div>
+                    {dongPopChartData.length>0?(
+                      <ResponsiveContainer width="100%" height={260}>
+                        <BarChart data={dongPopChartData} margin={{top:20,right:8,left:20,bottom:60}}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9"/>
+                          <XAxis dataKey="name" tick={{fontSize:9,fill:T.muted}} angle={-40} textAnchor="end" interval={0}/>
+                          <YAxis tick={{fontSize:10}} tickFormatter={function(v){return v.toLocaleString();}}/>
+                          <RTooltip formatter={function(v){return [v.toLocaleString()+"명","인구"];}}/>
+                          <Bar dataKey="인구" fill="#6366f1" radius={[3,3,0,0]}>
+                            <LabelList dataKey="인구" position="top" style={{fontSize:8,fill:"#6366f1",fontWeight:700}} formatter={function(v){return v.toLocaleString();}}/>
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    ):(
+                      <div style={{color:T.muted,fontSize:12,padding:20,textAlign:"center"}}>데이터 없음</div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
